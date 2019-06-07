@@ -4,6 +4,7 @@ This is a re-frame based implementation of the Kaleidoscope Tool for exploratory
 
 Mackeprang, Maximilian, et al. "Kaleidoscope: An RDF-based Exploratory Data Analysis Tool for Ideation Outcomes." The 31st Annual ACM Symposium on User Interface Software and Technology Adjunct Proceedings. ACM, 2018.
 
+![Kaleidoscope Icon](icon.png)
 
 ## Running Kaleidoscope
 
@@ -12,8 +13,9 @@ Furthermore, you will need a runnning Fuseki backend, to provide the data.
 
 To run the Application, change into the parent directory and run
 
+```
     lein fig:build.
-    
+```
 
 
 ## TODOs
@@ -54,7 +56,7 @@ https://purelyfunctional.tv/guide/database-structure-in-re-frame/
 
 TODO: markers and ideas:
 
-
+```
     (rf/reg-sub
       :cart-items
       (fn [db]
@@ -80,7 +82,7 @@ TODO: markers and ideas:
       :product-info
       (fn [db [_ product-id]]
         (get-in db [:products product-id])))
-    
+```
    
     
 ### Backend Functionality
@@ -95,6 +97,7 @@ The endpoints are a wrapper around sparql queries to a sparql endpoint running a
 ##### http://localhost:9500/api/all-ideas/
 Returns a ResultSet with the following data:
 
+```
     "results": {
     "bindings": [
       {
@@ -105,6 +108,7 @@ Returns a ResultSet with the following data:
         "idea": { "type": "uri" , "value": "http://purl.org/innovonto/ideas/e3eeb662-c7f7-4631-a979-cfc971012295" } ,
         "content": { "type": "literal" , "value": "tech powered doggy door. Opens the door when it recognizes your pet" }
       }]}
+```
 
 ##### http://localhost:9500/api/ideas-by-keyword/{keyword}
 
