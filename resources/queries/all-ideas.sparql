@@ -1,0 +1,8 @@
+PREFIX gi2mo:<http://purl.org/gi2mo/ns#>
+
+SELECT ?idea ?content
+WHERE {
+  ?idea a gi2mo:Idea.
+  ?idea gi2mo:content ?content
+}
+LIMIT 80

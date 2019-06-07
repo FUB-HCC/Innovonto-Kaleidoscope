@@ -1,0 +1,214 @@
+/* TODO define colors
+ Lightest: #DCDCDC
+ 80     #D3D3D3
+ 60     #C0C0C0
+ 40     #A9A9A9
+ 20     #808080
+ 10  	#696969
+
+
+ */
+
+/*
+export let fontSansBold = Utils.loadWebFont('IBM Plex Sans', 700);
+export let fontSans = Utils.loadWebFont('IBM Plex Sans', 400);
+export let fontMono = Utils.loadWebFont('IBM Plex Mono', 400);
+export let fontIcons = Utils.loadWebFont('Material Icons', 400);
+ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: IBM Plex Sans, sans-serif;
+}
+
+h1 {
+    font-size: 22px;
+    font-weight: 700;
+    padding: 0.5rem;
+}
+
+h2 {
+    color: white;
+    padding: 0.1rem;
+    background-color: black;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+/*export const ITALIC_FONT_SMALL = 'italic 400 12px IBM Plex Sans'; /*/
+h3 {
+    color: #808080;
+    font-style: italic;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.container {
+    min-width: 780px;
+    max-width: 1260px;
+    margin: 10px auto;
+}
+
+.tab-bar {
+    display: flex;
+}
+
+.tab {
+    color: white;
+    background-color: gray;
+    padding: 0.3rem 1rem;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.tab.active {
+    background-color: black;
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.idea-grid-container {
+    border-top: black 5px solid;
+    display: flex;
+}
+
+.idea-grid {
+    height: 550px;
+    width: 1105px;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-around;
+}
+
+
+/* Cells */
+
+/* TODO drop-shadow farbe */
+.idea-tile {
+    height: 50px;
+    width: 50px;
+    margin: 3px;
+    background-color: #DCDCDC;
+    box-shadow: 2px 2px 1px silver;
+    position: relative;
+}
+
+/* TODO farbe, sollte über komplettes tile gehen */
+.idea-tile:hover {
+    border: 2px solid darkgray;
+}
+
+.idea-tile:hover .tooltip {
+    visibility: visible;
+}
+
+.idea-tile .tooltip {
+    visibility: hidden;
+    width: 140px;
+    height: 140px;
+    background-color: white;
+    color: black;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 2px;
+
+    position: absolute;
+    top: 50px;
+    z-index: 1;
+}
+
+/* TODO make the tooltip div the same size always */
+/* TODO This is seriously broken :/ */
+.idea-tile .tooltip-body span {
+    display: block;
+    width: 140px;
+    height: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.annotations {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.toolbox {
+    width: 100%;
+    background-color: #DCDCDC;
+}
+
+.toolbox-body {
+    padding: 0.4rem;
+}
+
+
+.toolbox-row-element {
+    padding: 0.2rem;
+    margin-bottom: 1px;
+}
+
+/* TODO toolbox-row-element-icon? tollbox-row-element-toolbar? */
+
+.idea-toolbox-header {
+    background-color: black;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    padding-right: 1rem;
+}
+
+/* Active Markers */
+.active-marker {
+    display: flex;
+    background-color: #C0C0C0;
+}
+
+.active-marker-toolbar {
+    display: flex;
+}
+
+.active-marker i {
+    cursor: pointer;
+}
+
+.marker-selection-menu {
+    background-color: white;
+    opacity: 0.9;
+    position: absolute;
+    width: 200px;
+    height: 150px;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+
+/* Snapshots */
+.snapshot-pane {
+    margin-top: 6rem;
+}
+
+.snapshot-element {
+    display: flex;
+    justify-content: space-between;
+    background-color: #C0C0C0;
+}
+
+.snapshot-element-toolbar {
+    display: flex;
+}
+
+.snapshot-element-toolbar div {
+    margin: 0.3rem;
+}
+
+/* Available Markers */
+.available-marker {
+    background-color: #C0C0C0;
+    cursor: pointer;
+}

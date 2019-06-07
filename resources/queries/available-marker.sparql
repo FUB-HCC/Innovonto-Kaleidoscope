@@ -1,0 +1,20 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX gi2mo: <http://purl.org/gi2mo/ns#>
+PREFIX icv: <http://purl.org/innovonto/icv/types/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+
+SELECT ?linkedResource (COUNT(?linkedResource) as ?resourceCount)
+WHERE {
+  ?idea a gi2mo:Idea.
+  ?idea icv:hasAnnotation ?annotation.
+  ?idea gi2mo:content ?content.
+  ?annotation icv:annotationState "approved".
+  ?annotation icv:hasResourceCandidate ?resourceCandidate.
+  ?resourceCandidate icv:selected ?selected.
+  ?resourceCandidate icv:hasLinkedResource ?linkedResource.
+  FILTER (?selected = "true"^^xsd:boolean)
+}
+GROUP BY ?linkedResource
+ORDER BY DESC(?resourceCount)

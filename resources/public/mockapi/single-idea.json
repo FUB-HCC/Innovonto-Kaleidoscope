@@ -1,0 +1,49 @@
+{
+  "@id": "http://purl.org/innovonto/ideas/019cb2eb-d6ee-4fba-abfc-181ce89fa213",
+  "@type": "gi2mo:Idea",
+  "created": "2019-04-30T16:40:35.557Z",
+  "content": "The technology can be used to monitor air craft.",
+  "hasIdeaContest": "http://purl.org/innovonto/ideaContests/bionic-radar",
+  "hasSubmissionMethod": "http://purl.org/innovonto/submissionMethods/innovonto-mturk-icv-demo",
+  "hasAnnotation": [
+    {
+      "@id": "icv:AnnotationCandidate/408",
+      "@type": "icv:AnnotationCandidate",
+      "annotationState": "approved",
+      "hasResourceCandidate": [
+        {
+          "@id": "icv:ResourceCandidate/2487",
+          "@type": "icv:ResourceCandidate",
+          "hasLinkedResource": "http://dbpedia.org/resource/Aircraft",
+          "offset": "38",
+          "icv:selected": true,
+          "text": "air craft"
+        }
+      ],
+      "offset": "38",
+      "text": "air craft"
+    },
+    {
+      "@id": "icv:AnnotationCandidate/406",
+      "@type": "icv:AnnotationCandidate",
+      "annotationState": "approved",
+      "hasResourceCandidate": [
+        {
+          "@id": "icv:ResourceCandidate/2480",
+          "@type": "icv:ResourceCandidate",
+          "hasLinkedResource": "http://dbpedia.org/resource/Technology",
+          "offset": "4",
+          "icv:selected": true,
+          "text": "technology"
+        }
+      ],
+      "offset": "4",
+      "text": "technology"
+    }
+  ],
+  "status": "approved",
+  "hitId": "mturk:hit/3UQVX1UPFSOQBWS8XKFR7M38Z8I20M",
+  "workerId": "mturk:worker/A23EEEX9LR9X6Z",
+  "challenge": "http://purl.org/innovonto/legacy/ac2-abstract",
+  "numberInSession": "0"
+}
