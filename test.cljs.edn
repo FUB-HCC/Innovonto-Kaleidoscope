@@ -6,6 +6,6 @@
   ;; uncomment to launch tests in a headless environment
   ;; you will have to figure out the path to chrome on your system
   ;; :launch-js ["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" "--headless" "--disable-gpu" "--repl" :open-url]
-  :launch-js ["chrome" "--headless" "--repl" "--disable-gpu" :open-url]
+  :launch-js ["google-chrome" "--headless" "--repl" "--disable-gpu" :open-url]
   }
 {:main hcc.innovonto.kaleidoscope.test-runner}
