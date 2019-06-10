@@ -1,5 +1,7 @@
 #  Kaleidoscope (re-frame)
 
+[![CircleCI](https://circleci.com/gh/FUB-HCC/Innovonto-Kaleidoscope.svg?style=svg)](https://circleci.com/gh/FUB-HCC/Innovonto-Kaleidoscope)
+
 This is a re-frame based implementation of the Kaleidoscope Tool for exploratory Analysis of RDF-Data. For more Information you can look at the poster we submitted at UIST 2018:
 
 Mackeprang, Maximilian, et al. "Kaleidoscope: An RDF-based Exploratory Data Analysis Tool for Ideation Outcomes." The 31st Annual ACM Symposium on User Interface Software and Technology Adjunct Proceedings. ACM, 2018.
