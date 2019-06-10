@@ -147,6 +147,24 @@ To create a production build run:
     (use 'hcc.innovonto.kaleidoscope.server)
     (run-jetty handler {:port 3000})
 
+## Testing
+TODO: Include Circle CI via lein doo:
+
+lein doo phantom test once && lein cljsbuild once advanced ;; esac:
+[lein-doo "0.1.7"]]
+http://progjobs.co/ducktype/clj-rethinkdb/commit/a3c417ebfc0dbbe20d4d34ecc0f2691cd94ad659
+
+https://github.com/circleci/frontend
+Running the Tests
+
+There are two main ways for running tests using the plugin lein doo. If you wish to run the tests only once, you can do that with
+
+lein doo chrome dev-test once
+
+https://github.com/circleci/frontend
+
+
+
 ## License
 This project is distributed under the GNU Affero General Public License v3 (AGPL-3.0) (see LICENSE file)
 
