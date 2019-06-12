@@ -157,6 +157,38 @@
        "idea-details" [idea-toolbox (:idea active-toolbox)]
        [:span "Default Case: Error"]))])
 
+(defn test-tab []
+  [:div.cell-container
+   [:div.cell.clusterA]
+   [:div.cell.clusterA]
+   [:div.cell.clusterA]
+   [:div.cell.clusterA]
+   [:div.cell.clusterB]
+   [:div.cell.clusterB]
+   [:div.cell.clusterB]
+   [:div.cell.clusterC]
+   [:div.cell.clusterB]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]
+   [:div.cell]])
+
 (defn switch-pane [current-active]
   [:div
    [:div.tab-bar
@@ -167,6 +199,7 @@
      :idea-grid [idea-grid-tab]
      :review [:span "not implemented"]
      :export [:span "not implemented"]
+     :test [test-tab]
      [:span "Default Case: Error"])
    ])
 
