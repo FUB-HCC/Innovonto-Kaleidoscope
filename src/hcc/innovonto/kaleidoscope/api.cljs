@@ -45,5 +45,8 @@
                 :label label
                 }}))
 
+(defn get-marker-order-from [server-response]
+  (mapv #(:value (:linkedResource %1)) (:bindings (:results server-response))))
+
 (defn get-marker-from [server-response]
   (into {} (map convert-to-marker (:bindings (:results server-response)))))

@@ -86,13 +86,13 @@
     [snapshot-element {:timestamp "yesterday" :user "Hera"}]
     [snapshot-element {:timestamp "last week" :user "Aphrodite"}]]])
 
-(defn available-marker [[_ {:keys [:id :label]}]]
+(defn available-marker [{:keys [:id :label]}]
   [:div.toolbox-row-element.available-marker {:key id}
    [:i.material-icons {:on-click #(re-frame/dispatch [::events/add-marker id])} "add"]
    [:span label]])
 
 (defn available-marker-pane []
-  (let [available-marker-list @(re-frame/subscribe [::subs/available-marker])]
+  (let [available-marker-list @(re-frame/subscribe [::subs/ordered-available-marker])]
     [:div
      [:h3 "Marker"]
      (doall (map available-marker available-marker-list))]))
@@ -142,8 +142,8 @@
       [:span "Created By Foo"]
       [:div
        [:p (:content active-idea)]]
-      [:h4 "Similar Ideas"]
-      [:span "TODO"]
+      ;;[:h4 "Similar Ideas"]
+      ;;[:span "TODO"]
       ]
      [:div.idea-toolbox-annotations]
      ]))

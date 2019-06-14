@@ -11,6 +11,18 @@
     (:marker db)))
 
 (re-frame/reg-sub
+  ::marker-list
+  (fn [db _]
+    (:marker-list db)))
+
+(re-frame/reg-sub
+  ::ordered-available-marker
+  :<- [::available-marker]
+  :<- [::marker-list]
+  (fn [[all-marker marker-list] _]
+    (filterv some? (map (fn [id] (get all-marker id)) marker-list))))
+
+(re-frame/reg-sub
   ::available-marker
   :<- [::all-marker]
   (fn [all-marker _]

@@ -28,7 +28,7 @@
                                   "http://dbpedia.org/resource/Human"      {:id    "http://dbpedia.org/resource/Human"
                                                                             :label "Human"}
                                   }
-                 ;;TODO sort-vector (produced by backend)
+                 :marker-list ["http://dbpedia.org/resource/Animal" "http://dbpedia.org/resource/Clothing" "http://dbpedia.org/resource/Technology" "http://dbpedia.org/resource/Human" "http://dbpedia.org/resource/Material"]
                  :all-ideas      {
                                   "019cb2eb-d6ee-4fba-abfc-181ce89fa213" {
                                                                           :id          "019cb2eb-d6ee-4fba-abfc-181ce89fa213"

@@ -105,7 +105,9 @@
 (re-frame/reg-event-db
   ::add-available-marker
   (fn [db [_ response]]
-    (assoc-in db [:marker] (api/get-marker-from response))))
+    (-> db
+        (assoc-in [:marker-list] (api/get-marker-order-from response))
+        (assoc-in [:marker] (api/get-marker-from response)))))
 
 (re-frame/reg-event-fx
   ::initialize-available-marker
