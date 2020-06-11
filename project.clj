@@ -11,6 +11,7 @@
                  ;;SERVER
                  [bidi "2.1.6"]
                  [yesparql "0.3.2"]
+                 [http-kit "2.3.0"]
                  ;;CLIENT
                  [org.clojure/clojurescript "1.10.520"]
                  [reagent "0.8.1"]
@@ -18,7 +19,12 @@
                  [re-com "2.5.0"]
                  [day8.re-frame/http-fx "0.1.6"]]
 
-  :source-paths ["src"]
+  :source-paths ["src/clj", "src/cljs"]
+  :test-paths ["test/clj", "test/cljs"]
+  :resource-paths ["resources"]
+  :target-path "target/%s/"
+  :main ^:skip-aot hcc.innovonto.kaleidoscope.server
+
 
   :aliases {"fig"       ["trampoline" "run" "-m" "figwheel.main"]
             "fig:build" ["trampoline" "run" "-m" "figwheel.main" "-b" "dev" "-r"]

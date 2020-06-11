@@ -1,5 +1,6 @@
 (ns hcc.innovonto.kaleidoscope.server
-  (:require [bidi.ring :refer (make-handler)]
+  (:require [org.httpkit.server :as server]
+            [bidi.ring :refer (make-handler)]
             [ring.util.response :as res]
             [yesparql.core :as sparql-client]
             [yesparql.sparql :as sparql-utils]))
@@ -61,19 +62,18 @@
      :body    (str "{\"error\":\"Missing required parameter 'marker-id'\"}")
      }))
 
-(def handler
+;;TODO migrate to reitit.
+(def app
   (make-handler ["/" {["articles/" :id "/article.html"] article-handler
                       ["api/all-ideas/"]                get-all-ideas-handler
                       ["api/ideas-by-marker/"]          find-by-marker-id-handler
                       ["api/available-marker/"]         get-available-marker-handler
                       true                              not-found-handler}]))
 
-(defn run-standalone-api-server []
-  ;;TODO: implement the following steps:
-  ;;
-
-  ;; lein repl
-  ;; (use 'ring.adapter.jetty)
-  ;; (use 'hello-world.core)
-  ;; (run-jetty handler {:port 3000})
-  "foo")
+;TODO load config: cprop or yoghtos/config
+(defn -main
+  "This is our app's entry point"
+  [& args]
+  (let [port (Integer/parseInt (or (System/getenv "PORT") "6001"))]
+    (server/run-server #'app {:port port})
+    (println (str "Running webserver at http:/127.0.0.1:" port "/"))))

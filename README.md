@@ -1,4 +1,14 @@
-#  Kaleidoscope (re-frame)
+#  Kaleidoscope
+
+Kaleidoscope is a tool for exploratory analysis of RDF-encoded idea data. It enables you to get an overview over imported
+idea texts, and recurring themes within them, by interactively marking concepts used within the idea texts.
+
+## What is Kaleidoscope? What can I do with it?
+TODO: Screenshot main interface
+
+Context: ICV, Innovonto Research Project
+
+
 
 [![CircleCI](https://circleci.com/gh/FUB-HCC/Innovonto-Kaleidoscope.svg?style=svg)](https://circleci.com/gh/FUB-HCC/Innovonto-Kaleidoscope)
 
@@ -24,6 +34,7 @@ To run the Application, change into the parent directory and run
 ### Style
  * use same colors
  * include dummy-data
+ * favicon
 
 ### Frontend Functionality
 * init-function (inits: cells, available markers)

@@ -2,6 +2,7 @@
 #
 # Check https://circleci.com/docs/2.0/language-clojure/ for more details
 #
+# TODO https://circleci.com/blog/package-a-clojure-web-application-using-docker/
 version: 2
 jobs:
   build:
@@ -39,4 +40,5 @@ jobs:
           key: v1-dependencies-{{ checksum "project.clj" }}
 
       # run tests!
-      - run: lein fig:test 
+      # TODO backend tests.
+      - run: lein fig:test
