@@ -1,5 +1,7 @@
 #  Kaleidoscope
 
+[![CircleCI](https://circleci.com/gh/FUB-HCC/Innovonto-Kaleidoscope.svg?style=svg)](https://circleci.com/gh/FUB-HCC/Innovonto-Kaleidoscope)
+
 Kaleidoscope is a tool for exploratory analysis of RDF-encoded idea data. It enables you to get an overview over imported
 idea texts, and recurring themes within them, by interactively marking concepts used within the idea texts.
 
@@ -7,10 +9,6 @@ idea texts, and recurring themes within them, by interactively marking concepts 
 TODO: Screenshot main interface
 
 Context: ICV, Innovonto Research Project
-
-
-
-[![CircleCI](https://circleci.com/gh/FUB-HCC/Innovonto-Kaleidoscope.svg?style=svg)](https://circleci.com/gh/FUB-HCC/Innovonto-Kaleidoscope)
 
 This is a re-frame based implementation of the Kaleidoscope Tool for exploratory Analysis of RDF-Data. For more Information you can look at the poster we submitted at UIST 2018:
 
@@ -20,10 +18,16 @@ Mackeprang, Maximilian, et al. "Kaleidoscope: An RDF-based Exploratory Data Anal
 
 ## Running Kaleidoscope
 
-You will need Leiningen (at least Version XX).
+You will need Leiningen (at least Version 2.7.1).
 Furthermore, you will need a runnning Fuseki backend, to provide the data.
 
-To run the Application, change into the parent directory and run
+To run the Backend, change into the parent directory and run:
+```
+    lein run.
+```
+
+
+To run the dev build for the Frontend, run this, in addition to the backend:
 
 ```
     lein fig:build.

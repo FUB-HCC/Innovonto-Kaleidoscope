@@ -13,6 +13,12 @@
       db)))
 
 (re-frame/reg-event-db
+  ::generic-ajax-error
+  (fn [db event]
+    (println (str "Ajax Error: " event))
+    db))
+
+(re-frame/reg-event-db
   ::update-color
   (fn [db [_ marker-id color]]
     (assoc-in db [:marker marker-id :color] color)))
@@ -29,7 +35,8 @@
      :db         (update-in db [:marker marker-id] dissoc :state)
      :http-xhrio {
                   :method          :get
-                  :uri             (:ideas-by-marker api/urlconfig)
+                  ;;TODO optional params
+                  :uri             (api/backend-url-for ::api/all-ideas nil)
                   :params          {:marker-id marker-id}
                   :format          (ajax/json-request-format)
                   :response-format (ajax/json-response-format {:keywords? true})
@@ -79,8 +86,7 @@
     {:db         (update-in db [:marker marker-id] to-selected-marker)
      :http-xhrio {
                   :method          :get
-                  :uri             (:ideas-by-marker api/urlconfig)
-                  :params          {:marker-id marker-id}
+                  :uri             (api/backend-url-for ::api/ideas-by-marker {:id (:marker-id marker-id)})
                   :format          (ajax/json-request-format)
                   :response-format (ajax/json-response-format {:keywords? true})
                   :on-success      [::add-marker-to-ideas marker-id]
@@ -94,7 +100,8 @@
     {
      :db         db
      :http-xhrio {:method          :get
-                  :uri             (:all-ideas api/urlconfig)
+                  ;;TODO optional params
+                  :uri             (api/backend-url-for ::api/all-ideas nil)
                   :format          (ajax/json-request-format)
                   :response-format (ajax/json-response-format {:keywords? true})
                   :on-success      [::initialize-cell-map]
@@ -115,7 +122,8 @@
     {
      :db         db
      :http-xhrio {:method          :get
-                  :uri             (:available-marker api/urlconfig)
+                  ;;TODO optional params
+                  :uri             (api/backend-url-for ::api/available-marker nil)
                   :format          (ajax/json-request-format)
                   :response-format (ajax/json-response-format {:keywords? true})
                   :on-success      [::add-available-marker]

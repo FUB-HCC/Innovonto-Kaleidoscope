@@ -1,13 +1,20 @@
 (ns hcc.innovonto.kaleidoscope.api
-  (:require [clojure.string :as str]))
+  (:require [clojure.string :as str]
+            [reitit.core :as r]))
 
 (def test-response {:head {:vars ["idea" "content"]}, :results {:bindings [{:idea {:type "uri", :value "http://purl.org/innovonto/ideas/47fbb730-6a69-4842-9289-5e5ca1dc8eee"}, :content {:type "literal", :value "A camera system that can detect individuals by the unique way they walk. "}} {:idea {:type "uri", :value "http://purl.org/innovonto/ideas/fce9ab17-6ef2-42db-8745-368eeaee99c1"}, :content {:type "literal", :value "This would be useful for locating and tracking animals on land whom are endangered."}}]}})
 
-(def urlconfig {
-                :all-ideas        "/api/all-ideas/"
-                :available-marker "/api/available-marker/"
-                :ideas-by-marker  "/api/ideas-by-marker/"
-                })
+(def backend-endpoint "http://localhost:6001")
+
+(def api-router
+  (r/router
+    ["/api"
+     ["/ideas" ::all-ideas]
+     ["/marker" ::available-marker]
+     ["/marker/:id/ideas" ::ideas-by-marker]]))
+
+(defn backend-url-for [name params]
+  (str backend-endpoint (:path (r/match-by-name api-router name params))))
 
 ;;API: GET ALL
 (defn get-id [binding-response]

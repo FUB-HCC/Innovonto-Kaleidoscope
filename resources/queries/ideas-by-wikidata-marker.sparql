@@ -1,18 +1,17 @@
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX gi2mo: <http://purl.org/gi2mo/ns#>
-PREFIX icv: <http://purl.org/innovonto/icv/types/>
+PREFIX inov:<http://purl.org/innovonto/types/#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 
 SELECT ?subject ?surface ?resourceCandidate ?linkedResource
 WHERE {
   ?subject a gi2mo:Idea.
-  ?subject icv:hasAnnotation ?annotation.
-  ?annotation icv:annotationState "approved".
-  ?annotation icv:hasResourceCandidate ?resourceCandidate.
-  ?resourceCandidate icv:selected ?selected.
-  ?resourceCandidate icv:hasLinkedResource ?linkedResource.
+  ?subject inov:hasAnnotation ?annotation.
+  ?annotation inov:annotationState "approved".
+  ?annotation inov:hasResourceCandidate ?resourceCandidate.
+  ?resourceCandidate inov:selected ?selected.
+  ?resourceCandidate inov:hasLinkedResource ?linkedResource.
   ?linkedResource owl:sameAs ?wikidataResource.
   ?wikidataResource rdfs:subClassOf* ?marker
   FILTER (?selected = "true"^^xsd:boolean)

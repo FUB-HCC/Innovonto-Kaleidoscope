@@ -1,12 +1,12 @@
 (ns ^:figwheel-hooks hcc.innovonto.kaleidoscope.core
   (:require
     [goog.dom :as gdom]
-    [reagent.core :as reagent]
     [hcc.innovonto.kaleidoscope.views :as views]
     [re-frame.core :as re-frame]
-    [hcc.innovonto.kaleidoscope.db :as db]))
+    [hcc.innovonto.kaleidoscope.db :as db]
+    [reagent.dom :as rdom]))
 
-;;TODO remove
+;;TODO remove after other tests have been implemented
 (defn multiply [a b] (* a b))
 
 
@@ -21,7 +21,7 @@
 (defn mount [el]
   (re-frame/clear-subscription-cache!)
   (re-frame/dispatch-sync [::initialize-db])
-  (reagent/render-component [views/kaleidoscope-app] el))
+  (rdom/render [views/kaleidoscope-app] el))
 
 (defn mount-app-element []
   (when-let [el (get-app-element)]
