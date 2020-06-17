@@ -2,7 +2,7 @@
   (:require
     [goog.dom :as gdom]
     [hcc.innovonto.kaleidoscope.views :as views]
-    [re-frame.core :as re-frame]
+    [re-frame.core :as rf]
     [hcc.innovonto.kaleidoscope.db :as db]
     [reagent.dom :as rdom]))
 
@@ -13,14 +13,14 @@
 (defn get-app-element []
   (gdom/getElement "app"))
 
-(re-frame/reg-event-db
+(rf/reg-event-db
   ::initialize-db
   (fn [_ _]
     db/default-db))
 
 (defn mount [el]
-  (re-frame/clear-subscription-cache!)
-  (re-frame/dispatch-sync [::initialize-db])
+  (rf/clear-subscription-cache!)
+  (rf/dispatch-sync [::initialize-db])
   (rdom/render [views/kaleidoscope-app] el))
 
 (defn mount-app-element []

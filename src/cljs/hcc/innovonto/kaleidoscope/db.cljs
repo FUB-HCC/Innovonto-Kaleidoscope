@@ -1,15 +1,13 @@
 (ns hcc.innovonto.kaleidoscope.db)
 
 (declare available-icon-colors)
+
 (def default-db {
+                 :sync-state    :up-to-date
                  :active-panel   :idea-grid
                  :active-toolbox {
                                   :title "marker-toolbox"
                                   }
-                 ;;:active-toolbox   {
-                 ;;                   :title "idea-details"
-                 ;;                   :idea  "019cb2eb-d6ee-4fba-abfc-181ce89fa213"
-                 ;;                   }
                  :marker         {
                                   "http://dbpedia.org/resource/Material"   {:id    "http://dbpedia.org/resource/Material"
                                                                             :label "Material"

@@ -2,8 +2,9 @@
   (:require [hcc.innovonto.kaleidoscope.db :as db]
             [hcc.innovonto.kaleidoscope.subs :as subs]
             [hcc.innovonto.kaleidoscope.events :as events]
+            [hcc.innovonto.kaleidoscope.init.views :as init-views]
             [re-com.popover :as popover]
-            [re-frame.core :as re-frame]
+            [re-frame.core :as rf]
             [reagent.core :as reagent]))
 
 
@@ -26,11 +27,11 @@
    [:input {:type "text" :placeholder "Search marker..."}]])
 
 (defn select-color-icon [marker-id [_ val]]
-  [:i.material-icons {:on-click #(re-frame/dispatch [::events/update-color marker-id val])
+  [:i.material-icons {:on-click #(rf/dispatch [::events/update-color marker-id val])
                       :style    {:color val}} "fiber_manual_record"])
 
 (defn select-shape-icon [marker-id shape]
-  [:i.material-icons {:on-click #(re-frame/dispatch [::events/update-icon marker-id shape])
+  [:i.material-icons {:on-click #(rf/dispatch [::events/update-icon marker-id shape])
                       :style    {:color (:gray db/available-icon-colors)}} shape])
 
 ;;TODO add backdrop
@@ -56,7 +57,7 @@
      [:div.active-marker-toolbar
       [:div [:i.material-icons "visibility"]]
       [:div [:i.material-icons "settings"]]
-      [:div [:i.material-icons {:on-click #(re-frame/dispatch [::events/remove-marker id])} "delete"]]]
+      [:div [:i.material-icons {:on-click #(rf/dispatch [::events/remove-marker id])} "delete"]]]
      ]))
 
 (defn selected-marker-pane []
@@ -65,7 +66,7 @@
    [:div.selected-marker-list
     [add-new-marker]
     [:div
-     (let [selected-marker @(re-frame/subscribe [::subs/selected-marker])]
+     (let [selected-marker @(rf/subscribe [::subs/selected-marker])]
        (map active-marker selected-marker))]
     ]])
 
@@ -88,11 +89,11 @@
 
 (defn available-marker [{:keys [:id :label]}]
   [:div.toolbox-row-element.available-marker {:key id}
-   [:i.material-icons {:on-click #(re-frame/dispatch [::events/add-marker id])} "add"]
+   [:i.material-icons {:on-click #(rf/dispatch [::events/add-marker id])} "add"]
    [:span label]])
 
 (defn available-marker-pane []
-  (let [available-marker-list @(re-frame/subscribe [::subs/ordered-available-marker])]
+  (let [available-marker-list @(rf/subscribe [::subs/ordered-available-marker])]
     [:div
      [:h3 "Marker"]
      (doall (map available-marker available-marker-list))]))
@@ -119,7 +120,7 @@
 ;;The key can be given either (as in this example) as meta-data, or as a :key item in the first argument to a component (if it is a map). See React’s documentation for more info.
 (defn map-cell [[_ idea]]
   [:div.idea-tile {:key      (:id idea)
-                   :on-click #(re-frame/dispatch [::events/show-idea-details (:id idea)])}
+                   :on-click #(rf/dispatch [::events/show-idea-details (:id idea)])}
    [idea-tooltip (:content idea)]
    [:div.annotations
     (when-let [marker (not-empty (:marker idea))]
@@ -128,15 +129,15 @@
    [:div.marker]])
 
 (defn idea-grid []
-  (let [all-ideas @(re-frame/subscribe [::subs/all-ideas])]
+  (let [all-ideas @(rf/subscribe [::subs/all-ideas])]
     [:div.idea-grid
      (doall (map map-cell all-ideas))]))
 
 (defn idea-toolbox [active-idea-id]
-  (let [active-idea @(re-frame/subscribe [::subs/idea-details active-idea-id])]
+  (let [active-idea @(rf/subscribe [::subs/idea-details active-idea-id])]
     [:div.toolbox
      [:div.idea-toolbox-header
-      [:span {:on-click #(re-frame/dispatch [::events/close-idea-toolbox])} "X"]]
+      [:span.close {:on-click #(rf/dispatch [::events/close-idea-toolbox])} "×"]]
      [:div.idea-toolbox-body
       [:h3 (:id active-idea)]
       [:span "Created By Foo"]
@@ -151,7 +152,7 @@
 (defn idea-grid-tab []
   [:div.idea-grid-container
    [idea-grid]
-   (let [active-toolbox @(re-frame/subscribe [::subs/active-toolbox])]
+   (let [active-toolbox @(rf/subscribe [::subs/active-toolbox])]
      (case (:title active-toolbox)
        "marker-toolbox" [marker-toolbox]
        "idea-details" [idea-toolbox (:idea active-toolbox)]
@@ -203,14 +204,21 @@
      [:span "Default Case: Error"])
    ])
 
+(defn open-modal [e]
+  (let [modal (-> js/document (.getElementById "init-modal"))]
+    (set! (.-display (.-style modal)) "block")))
+
 (defn debug-buttons []
   [:div
-   [:button {:on-click #(re-frame/dispatch [::events/request-app-init])} "Reset"]
-   [:button {:on-click #(re-frame/dispatch [::events/initialize-available-marker])} "Available Marker"]])
+   [:button {:on-click #(rf/dispatch [::events/request-app-init])} "Reset"]
+   [:button {:on-click #(rf/dispatch [::events/initialize-available-marker])} "Available Marker"]
+   [:button {:on-click open-modal} "Open Modal"]])
 
 (defn kaleidoscope-app []
-  [:div.container
-   [header]
-   [debug-buttons]
-   [switch-pane :idea-grid]
-   ])
+  [:div
+   [init-views/init-modal]
+   [:div.container
+    [header]
+    [debug-buttons]
+    [switch-pane :idea-grid]
+    ]])

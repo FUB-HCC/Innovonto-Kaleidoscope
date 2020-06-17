@@ -1,0 +1,6 @@
+PREFIX gi2mo:<http://purl.org/gi2mo/ns#>
+
+DESCRIBE ?idea WHERE {
+ ?idea a gi2mo:Idea;
+       gi2mo:hasIdeaContest ?contest.
+}
