@@ -2,7 +2,8 @@
   (:require [hcc.innovonto.kaleidoscope.api :as api]
             [re-frame.core :as rf]
             [day8.re-frame.http-fx]
-            [ajax.core :as ajax]))
+            [ajax.core :as ajax]
+            [sparql-client.format :as sparql]))
 
 ;; DEBUG EVENTS
 (rf/reg-event-db
@@ -12,6 +13,7 @@
       (println db)
       db)))
 
+;;TODO add toast to ui
 (rf/reg-event-db
   ::generic-ajax-error
   (fn [db event]
@@ -28,6 +30,7 @@
   (fn [db [_ marker-id icon]]
     (assoc-in db [:marker marker-id :icon] icon)))
 
+;;TODO wtf?
 (rf/reg-event-fx
   ::remove-marker
   (fn [{:keys [db]} [_ marker-id]]
@@ -93,21 +96,6 @@
                   :on-failure      [::generic-ajax-error]}
      }))
 
-
-(rf/reg-event-fx
-  ::request-app-init
-  (fn [{:keys [db]} _]
-    {
-     :db         db
-     :http-xhrio {:method          :get
-                  ;;TODO optional params
-                  :uri             (api/backend-url-for ::api/all-ideas nil)
-                  :format          (ajax/json-request-format)
-                  :response-format (ajax/json-response-format {:keywords? true})
-                  :on-success      [::initialize-cell-map]
-                  :on-failure      [::generic-ajax-error]}
-     }))
-
 ;;TODO initialize: Available Marker
 (rf/reg-event-db
   ::add-available-marker
@@ -116,32 +104,12 @@
         (assoc-in [:marker-list] (api/get-marker-order-from response))
         (assoc-in [:marker] (api/get-marker-from response)))))
 
-(rf/reg-event-fx
-  ::initialize-available-marker
-  (fn [{:keys [db]} _]
-    {
-     :db         db
-     :http-xhrio {:method          :get
-                  ;;TODO optional params
-                  :uri             (api/backend-url-for ::api/available-marker nil)
-                  :format          (ajax/json-request-format)
-                  :response-format (ajax/json-response-format {:keywords? true})
-                  :on-success      [::add-available-marker]
-                  :on-failure      [::generic-ajax-error]}
-     }))
-
-;;TODO reg-event-db
-(rf/reg-event-fx
-  ::initialize-cell-map
-  (fn [{:keys [db]} [_ response]]
-    {
-     :db (assoc db :all-ideas (api/convert-to-db-structure response))}))
-
 (rf/reg-event-db
   ::close-idea-toolbox
   (fn [db _]
     (assoc db :active-toolbox {:title "marker-toolbox"})))
 
+;;TODO sparql-query
 (rf/reg-event-db
   ::show-idea-details
   (fn [db [_ idea-id]]

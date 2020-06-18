@@ -50,6 +50,6 @@
      [:div
       [:button
        (if @(rf/subscribe [::subs/configured?])
-         {:on-click #(rf/dispatch [::events/init-kaleidoscope])}
+         {:on-click #(rf/dispatch [::events/init-app])}
          {:disabled true})
        "Continue"]]]]])
