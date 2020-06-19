@@ -40,7 +40,7 @@
        [:p "To start, please select a datasource that you want to explore:"]
        [:div.form-control-vertical
         [:label [:input {:type "radio" :name "datasource" :on-click #(rf/dispatch [::events/change-datasource :innovonto-core])}] "Use demo ideas from innovonto-core"]
-        [:label [:input {:type "radio" :name "datasource" :on-click #(rf/dispatch [::events/change-datasource :file-upload])}] "Upload a file"]
+        [:label [:input {:type "radio" :name "datasource" :disabled true :on-click #(rf/dispatch [::events/change-datasource :file-upload])}] "Upload a file"]
         [:label [:input {:type "radio" :name "datasource" :on-click #(rf/dispatch [::events/change-datasource :sparql-endpoint])}] "Use a public SPARQL endpoint"]
         ]
        [datasource-additional-params]
