@@ -13,7 +13,8 @@
                  [metosin/reitit-ring "0.5.2"]
                  [yesparql "0.3.3"]
                  [http-kit "2.3.0"]
-                 ;;[ring "1.8.1"]
+                 [ring/ring-core "1.8.1"]
+                 [ring-cors "0.1.13"]
                  [cprop "0.1.17"]
                  ;;CLIENT
                  [org.clojure/clojurescript "1.10.773"]
@@ -39,7 +40,8 @@
   :profiles {
              :uberjar {:omit-source true
                         :aot :all
-                        :uberjar-name "kaleidoscope.jar"}
+                        :uberjar-name "kaleidoscope.jar"
+                       }
              :dev {:jvm-opts     ["-Dconf=dev-config.edn"]
                    ;;TODO env
                    :dependencies [[com.bhauman/figwheel-main "0.2.8"]

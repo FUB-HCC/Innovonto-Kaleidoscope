@@ -2,6 +2,7 @@
   (:require [cprop.core :as cprop]
             [org.httpkit.server :as server]
             [ring.middleware.cors :refer [wrap-cors]]
+            [ring.middleware.resource :refer [wrap-resource]]
             [ring.util.response :as res]
             [reitit.ring :as reitit-ring]
             [hcc.innovonto.kaleidoscope.rdf-backend :as rdf])
@@ -39,6 +40,7 @@
        ["/marker/:id/ideas" {:get find-by-marker-id-handler}]])
     (reitit-ring/routes
       (reitit-ring/redirect-trailing-slash-handler)
+      (reitit-ring/create-resource-handler {:path "/"})
       (reitit-ring/create-default-handler {:method :add}))))
 
 (def app
