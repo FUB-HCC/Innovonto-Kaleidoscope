@@ -24,13 +24,13 @@
                  [day8.re-frame/http-fx "v0.2.0"]
                  [cljs-ajax "0.8.0"]]
 
-  :source-paths ["src/clj", "src/cljs"]
-  :test-paths ["test/clj", "test/cljs"]
+  :source-paths ["src/clj" "src/cljs"]
   :resource-paths ["resources"]
+  :test-paths ["test/clj", "test/cljs"]
   :target-path "target/%s/"
-  :main ^:skip-aot hcc.innovonto.kaleidoscope.server
 
-  ;TODO   :clean-targets ^{:protect false}
+  :clean-targets ^{:protect false} ["target/%s/" "resources/public/cljs-out"]
+  :main ^:skip-aot hcc.innovonto.kaleidoscope.server
 
   :aliases {"fig"       ["trampoline" "run" "-m" "figwheel.main"]
             "fig:build" ["trampoline" "run" "-m" "figwheel.main" "-b" "dev" "-r"]
@@ -38,13 +38,15 @@
             "fig:test"  ["run" "-m" "figwheel.main" "-co" "test.cljs.edn" "-m" hcc.innovonto.kaleidoscope.test-runner]}
 
   :profiles {
-             :uberjar {:omit-source true
-                        :aot :all
-                        :uberjar-name "kaleidoscope.jar"
+             :uberjar {:omit-source  true
+                       :aot          :all
+                       :dependencies [[com.bhauman/figwheel-main "0.2.8"]]
+                       :prep-tasks   ["compile" ["fig:min"]]
+                       :uberjar-name "kaleidoscope.jar"
                        }
-             :dev {:jvm-opts     ["-Dconf=dev-config.edn"]
-                   ;;TODO env
-                   :dependencies [[com.bhauman/figwheel-main "0.2.8"]
-                                  [com.bhauman/rebel-readline-cljs "0.1.4"]]
-                   }})
+             :dev     {:jvm-opts     ["-Dconf=dev-config.edn"]
+                       ;;TODO env
+                       :dependencies [[com.bhauman/figwheel-main "0.2.8"]
+                                      [com.bhauman/rebel-readline-cljs "0.1.4"]]
+                       }})
 
