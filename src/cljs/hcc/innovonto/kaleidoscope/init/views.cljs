@@ -3,9 +3,6 @@
             [hcc.innovonto.kaleidoscope.init.subs :as subs]
             [hcc.innovonto.kaleidoscope.init.events :as events]))
 
-(defn close-modal []
-  (let [modal (-> js/document (.getElementById "init-modal"))]
-    (set! (.-display (.-style modal)) "none")))
 
 
 #_[:input {:type "file" :id "file" :name "file"
@@ -31,25 +28,27 @@
       [:span])))
 
 (defn init-modal []
-  [:div#init-modal.modal
-   [:div.modal-content
-    [:span.close {:on-click close-modal} "×"]
-    [:div.modal-header
-     [:img {:src ""}]
-     [:h1 "Welcome to Kaleidoscope"]]
-    [:div.modal-body
-     [:p "To start, please select a datasource that you want to explore:"]
-     [:div.form-control-vertical
-      [:label [:input {:type "radio" :name "datasource" :on-click #(rf/dispatch [::events/change-datasource :innovonto-core])}] "Use demo ideas from innovonto-core"]
-      [:label [:input {:type "radio" :name "datasource" :on-click #(rf/dispatch [::events/change-datasource :file-upload])}] "Upload a file"]
-      [:label [:input {:type "radio" :name "datasource" :on-click #(rf/dispatch [::events/change-datasource :sparql-endpoint])}] "Use a public SPARQL endpoint"]
-      ]
-     [datasource-additional-params]
-     [:div [:span "This is a DEMO. It will not save your configuration or markers. If you have questions
+  (let [modal-open? @(rf/subscribe [::subs/modal-open?])]
+    (println (str "Modal-open?" modal-open?))
+    [:div.modal {:style {:display (if modal-open? "block" "none")}}
+     [:div.modal-content
+      ;;[:span.close {:on-click close-modal} "×"]
+      [:div.modal-header
+       [:img {:src ""}]
+       [:h1 "Welcome to Kaleidoscope"]]
+      [:div.modal-body
+       [:p "To start, please select a datasource that you want to explore:"]
+       [:div.form-control-vertical
+        [:label [:input {:type "radio" :name "datasource" :on-click #(rf/dispatch [::events/change-datasource :innovonto-core])}] "Use demo ideas from innovonto-core"]
+        [:label [:input {:type "radio" :name "datasource" :on-click #(rf/dispatch [::events/change-datasource :file-upload])}] "Upload a file"]
+        [:label [:input {:type "radio" :name "datasource" :on-click #(rf/dispatch [::events/change-datasource :sparql-endpoint])}] "Use a public SPARQL endpoint"]
+        ]
+       [datasource-additional-params]
+       [:div [:span "This is a DEMO. It will not save your configuration or markers. If you have questions
      or problems, please contact us at kaleidoscope@zvaadw.de"]]
-     [:div
-      [:button
-       (if @(rf/subscribe [::subs/configured?])
-         {:on-click #(rf/dispatch [::events/init-app])}
-         {:disabled true})
-       "Continue"]]]]])
+       [:div
+        [:button
+         (if @(rf/subscribe [::subs/configured?])
+           {:on-click #(rf/dispatch [::events/init-app])}
+           {:disabled true})
+         "Continue"]]]]]))

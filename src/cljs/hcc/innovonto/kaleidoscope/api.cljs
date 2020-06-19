@@ -23,19 +23,19 @@
   {
    :prefixes {
               :gi2mo "http://purl.org/gi2mo/ns#"
-              :inov "http://purl.org/innovonto/types/#"
-              :xsd "http://www.w3.org/2001/XMLSchema#"
+              :inov  "http://purl.org/innovonto/types/#"
+              :xsd   "http://www.w3.org/2001/XMLSchema#"
               }
-   :select ["?linkedResource" "(COUNT(?linkedResource) as ?resourceCount)"]
-   :where [
-           ["?idea" "a" "gi2mo:Idea"]
-           ["?idea" "inov:hasAnnotation" "?annotation"]
-           ["?annotation" "inov:annotationState" "approved"]
-           ["?annotation" "inov:hasResourceCandidate" "?resourceCandidate"]
-           ["?resourceCandidate" "inov:selected" "?selected."]
-           ["?resourceCandidate" "inov:hasLinkedResource" "?linkedResource."]
-           :filter ["?selected = \"true\"^^xsd:boolean"]
-           ]
+   :select   ["?linkedResource" "(COUNT(?linkedResource) as ?resourceCount)"]
+   :where    [
+              ["?idea" "a" "gi2mo:Idea"]
+              ["?idea" "inov:hasAnnotation" "?annotation"]
+              ["?annotation" "inov:annotationState" "approved"]
+              ["?annotation" "inov:hasResourceCandidate" "?resourceCandidate"]
+              ["?resourceCandidate" "inov:selected" "?selected"]
+              ["?resourceCandidate" "inov:hasLinkedResource" "?linkedResource"]
+              [:filter "?selected = \"true\"^^xsd:boolean"]
+              ]
    :group-by "?linkedResource"
    :order-by "?resourceCount"
    })
@@ -57,21 +57,6 @@
 ;;API: GET ALL
 (defn get-id [binding-response]
   (last (str/split (:value (:idea binding-response)) #"/")))
-
-(defn convert [element]
-  {:id      (get-id element)
-   :content (:value (:content element))
-   :marker  #{}})
-
-(defn convert-one [result [head & tail]]
-  (if (nil? head)
-    result
-    (convert-one (assoc result (get-id head) (convert head)) tail)))
-
-(defn convert-to-db-structure [server-response]
-  (let [response-ideas (:bindings (:results server-response))
-        result-map {}]
-    (convert-one result-map response-ideas)))
 
 ;;API SELECT-BY-MARKER
 

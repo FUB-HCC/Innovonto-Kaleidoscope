@@ -4,6 +4,10 @@
 
 (def default-db {
                  :sync-state    :up-to-date
+                 :init {
+                        :initialization-done false
+                        :show-init-modal true
+                        }
                  :active-panel   :idea-grid
                  :active-toolbox {
                                   :title "marker-toolbox"

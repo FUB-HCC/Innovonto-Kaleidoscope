@@ -47,7 +47,11 @@
 ;;TODO . vs ;
 ;;TODO can i use namespaced keywords here?
 (defn clause->string [clause]
-  (str (string/join " " clause) "."))
+  (if (string? (first clause))
+    (str (string/join " " clause) ".")
+    (case (first clause)
+      :filter (str "FILTER " (second clause))))
+  )
 
 ;;TODO can i use namespaced keywords here?
 (defn where->string [clauses]
@@ -57,25 +61,33 @@
   (let [prefix-result (reduce prefix->string "" (:prefixes query))
         select-result (select->string (:select query))
         where-result (where->string (:where query))
-        limit-result (if (:limit query) (str "LIMIT " (str (:limit query))) "")]
-    (println where-result)
-    (println limit-result)
-    (str prefix-result " " select-result " " where-result " " limit-result)))
+        limit-result (if (:limit query) (str "LIMIT " (str (:limit query))) "")
+        group-by-result (if (:group-by query) (str "GROUP BY " (:group-by query)) "")
+        order-by-result (if (:order-by query) (str "ORDER BY " (:order-by query)) "")
+        ]
+    ;;(println where-result)
+    ;;(println limit-result)
+    (str prefix-result " "
+         select-result " "
+         where-result " "
+         group-by-result " "
+         order-by-result " "
+         limit-result)))
 
 (def example-response
   {:head
-   {:vars ["idea" "content"]},
+            {:vars ["idea" "content"]},
    :results {:bindings [
-               {:idea    {
-                          :type  "uri",
-                          :value "https://innovonto-core.imp.fu-berlin.de/entities/ideas/cf65b021-620f-43fe-9473-1712be788cde"
-                          },
-                :content {
-                          :type "literal", :value "This can enable me to interact and see where others are in my home."
-                          }
-                }
-               ]
-    }})
+                        {:idea    {
+                                   :type  "uri",
+                                   :value "https://innovonto-core.imp.fu-berlin.de/entities/ideas/cf65b021-620f-43fe-9473-1712be788cde"
+                                   },
+                         :content {
+                                   :type "literal", :value "This can enable me to interact and see where others are in my home."
+                                   }
+                         }
+                        ]
+             }})
 
 (defn convert-binding [binding]
   ;;for all keys, extract the value and add it directly to the map

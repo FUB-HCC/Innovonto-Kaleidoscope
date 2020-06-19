@@ -2,7 +2,9 @@
   (:require [hcc.innovonto.kaleidoscope.db :as db]
             [hcc.innovonto.kaleidoscope.subs :as subs]
             [hcc.innovonto.kaleidoscope.events :as events]
+            [hcc.innovonto.kaleidoscope.init.events :as init-events]
             [hcc.innovonto.kaleidoscope.init.views :as init-views]
+            [hcc.innovonto.kaleidoscope.components.cellmap :as cellmap]
             [re-com.popover :as popover]
             [re-frame.core :as rf]
             [reagent.core :as reagent]))
@@ -106,33 +108,6 @@
     [snapshot-pane]
     [available-marker-pane]]])
 
-;;TODO shorten to X characters: either via js or via css
-(defn idea-tooltip [content]
-  [:div.tooltip
-   [:div.tooltip-body
-    [:span content]]])
-
-(defn cell-marker [{:keys [:id :icon :color]}]
-  [:div {:key id}
-   [:i.material-icons {:style {:color color}} icon]])
-
-;;Every cell has max 4 markers
-;;The key can be given either (as in this example) as meta-data, or as a :key item in the first argument to a component (if it is a map). See React’s documentation for more info.
-(defn map-cell [[_ idea]]
-  [:div.idea-tile {:key      (:id idea)
-                   :on-click #(rf/dispatch [::events/show-idea-details (:id idea)])}
-   [idea-tooltip (:content idea)]
-   [:div.annotations
-    (when-let [marker (not-empty (:marker idea))]
-      (map cell-marker marker))]
-   [:div.ratings]
-   [:div.marker]])
-
-(defn idea-grid []
-  (let [all-ideas @(rf/subscribe [::subs/all-ideas])]
-    [:div.idea-grid
-     (doall (map map-cell all-ideas))]))
-
 (defn idea-toolbox [active-idea-id]
   (let [active-idea @(rf/subscribe [::subs/idea-details active-idea-id])]
     [:div.toolbox
@@ -151,7 +126,7 @@
 
 (defn idea-grid-tab []
   [:div.idea-grid-container
-   [idea-grid]
+   [cellmap/idea-grid]
    (let [active-toolbox @(rf/subscribe [::subs/active-toolbox])]
      (case (:title active-toolbox)
        "marker-toolbox" [marker-toolbox]
@@ -204,16 +179,12 @@
      [:span "Default Case: Error"])
    ])
 
-(defn open-modal [e]
-  (let [modal (-> js/document (.getElementById "init-modal"))]
-    (set! (.-display (.-style modal)) "block")))
-
 (defn debug-buttons []
   [:div
-   [:button {:on-click #(rf/dispatch [::events/request-app-init])} "Reset"]
-   [:button {:on-click #(rf/dispatch [::events/initialize-available-marker])} "Available Marker"]
-   [:button {:on-click open-modal} "Open Modal"]])
+   [:button {:on-click #(rf/dispatch [::init-events/reset])} "Reset"]
+   [:button {:on-click #(rf/dispatch [::init-events/toggle-modal])} "Open Modal"]])
 
+;;TODO toast/alert for generic ajax error
 (defn kaleidoscope-app []
   [:div
    [init-views/init-modal]

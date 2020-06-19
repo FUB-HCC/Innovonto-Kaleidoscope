@@ -1,6 +1,15 @@
 (ns hcc.innovonto.kaleidoscope.init.subs
   (:require [re-frame.core :as rf]))
 
+(rf/reg-sub
+  ::modal-open?
+    (fn [db]
+      (:show-init-modal (:init db))))
+
+(rf/reg-sub
+  ::initialized?
+  (fn [db]
+    (:initialization-done (:init db))))
 
 (rf/reg-sub
   ::datasource-type

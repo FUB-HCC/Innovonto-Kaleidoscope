@@ -52,3 +52,8 @@
   :<- [::all-ideas]
   (fn [all-ideas [_ idea-id]]
     (get all-ideas idea-id)))
+
+(rf/reg-sub
+  ::sync-state
+  (fn [db _]
+    (:sync-state db)))
