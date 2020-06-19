@@ -5,6 +5,9 @@
             [hcc.innovonto.kaleidoscope.init.events :as init-events]
             [hcc.innovonto.kaleidoscope.init.views :as init-views]
             [hcc.innovonto.kaleidoscope.components.cellmap :as cellmap]
+            [hcc.innovonto.kaleidoscope.components.configtab :as config]
+            [hcc.innovonto.kaleidoscope.components.exporttab :as export]
+            [hcc.innovonto.kaleidoscope.components.reviewtab :as review]
             [re-com.popover :as popover]
             [re-frame.core :as rf]
             [reagent.core :as reagent]))
@@ -125,7 +128,7 @@
      ]))
 
 (defn idea-grid-tab []
-  [:div.idea-grid-container
+  [:div.tab-container
    [cellmap/idea-grid]
    (let [active-toolbox @(rf/subscribe [::subs/active-toolbox])]
      (case (:title active-toolbox)
@@ -133,51 +136,25 @@
        "idea-details" [idea-toolbox (:idea active-toolbox)]
        [:span "Default Case: Error"]))])
 
-(defn test-tab []
-  [:div.cell-container
-   [:div.cell.clusterA]
-   [:div.cell.clusterA]
-   [:div.cell.clusterA]
-   [:div.cell.clusterA]
-   [:div.cell.clusterB]
-   [:div.cell.clusterB]
-   [:div.cell.clusterB]
-   [:div.cell.clusterC]
-   [:div.cell.clusterB]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]
-   [:div.cell]])
+(defn tab [title keyword current-active]
+  [:div.tab (when (= current-active keyword) {:class "active"})
+   [:span {:on-click #(rf/dispatch [::events/switch-tab keyword])} title]])
 
-(defn switch-pane [current-active]
-  [:div
-   [:div.tab-bar
-    [:div.tab.active "IdeaMap"]
-    [:div.tab "Review"]
-    [:div.tab "Export"]]
-   (case current-active
-     :idea-grid [idea-grid-tab]
-     :review [:span "not implemented"]
-     :export [:span "not implemented"]
-     :test [test-tab]
-     [:span "Default Case: Error"])
-   ])
+(defn switch-pane []
+  (let [current-active @(rf/subscribe [::subs/active-tab])]
+    [:div
+     [:div.tab-bar
+      [tab "IdeaMap" :idea-grid current-active]
+      [tab "Review" :review current-active]
+      [tab "Export" :export current-active]
+      [tab "Config" :config current-active]]
+     (case current-active
+       :idea-grid [idea-grid-tab]
+       :review [review/review-tab]
+       :export [export/export-tab]
+       :config [config/config-tab]
+       [:span "Default Case: Error"])
+     ]))
 
 (defn debug-buttons []
   [:div
@@ -191,5 +168,5 @@
    [:div.container
     [header]
     [debug-buttons]
-    [switch-pane :idea-grid]
+    [switch-pane]
     ]])

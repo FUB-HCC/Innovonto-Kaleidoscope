@@ -30,7 +30,7 @@
    :where    [
               ["?idea" "a" "gi2mo:Idea"]
               ["?idea" "inov:hasAnnotation" "?annotation"]
-              ["?annotation" "inov:annotationState" "approved"]
+              ["?annotation" "inov:annotationState" "\"approved\""]
               ["?annotation" "inov:hasResourceCandidate" "?resourceCandidate"]
               ["?resourceCandidate" "inov:selected" "?selected"]
               ["?resourceCandidate" "inov:hasLinkedResource" "?linkedResource"]

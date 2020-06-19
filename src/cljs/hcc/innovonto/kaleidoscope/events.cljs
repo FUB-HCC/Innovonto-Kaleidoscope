@@ -21,6 +21,11 @@
     db))
 
 (rf/reg-event-db
+  ::switch-tab
+  (fn [db [_ tab]]
+    (assoc db :active-tab tab)))
+
+(rf/reg-event-db
   ::update-color
   (fn [db [_ marker-id color]]
     (assoc-in db [:marker marker-id :color] color)))
@@ -95,14 +100,6 @@
                   :on-success      [::add-marker-to-ideas marker-id]
                   :on-failure      [::generic-ajax-error]}
      }))
-
-;;TODO initialize: Available Marker
-(rf/reg-event-db
-  ::add-available-marker
-  (fn [db [_ response]]
-    (-> db
-        (assoc-in [:marker-list] (api/get-marker-order-from response))
-        (assoc-in [:marker] (api/get-marker-from response)))))
 
 (rf/reg-event-db
   ::close-idea-toolbox

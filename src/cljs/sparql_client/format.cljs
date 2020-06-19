@@ -50,7 +50,7 @@
   (if (string? (first clause))
     (str (string/join " " clause) ".")
     (case (first clause)
-      :filter (str "FILTER " (second clause))))
+      :filter (str "FILTER (" (second clause) ")")))
   )
 
 ;;TODO can i use namespaced keywords here?

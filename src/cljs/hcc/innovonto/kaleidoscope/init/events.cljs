@@ -90,6 +90,14 @@
                                                :on-success [::initialize-cell-map]
                                                :on-failure [::generic-ajax-error]})}))
 
+(rf/reg-event-db
+  ::initialize-available-marker-component
+  (fn [db [_ response]]
+    (-> db
+        (assoc-in [:marker-list] (api/get-marker-order-from response))
+        (assoc-in [:marker] (api/get-marker-from response)))))
+
+
 (rf/reg-event-fx
   ::update-available-markers
   (fn [{:keys [db]} _]
@@ -97,7 +105,7 @@
      :db         (assoc-in db [:sync-state] :loading)
      :http-xhrio (sparql-client/query-request {
                                                :query      (api/available-markers-query)
-                                               :on-success [::add-available-marker]
+                                               :on-success [::initialize-available-marker-component]
                                                :on-failure [::generic-ajax-error]})}))
 
 (rf/reg-event-fx

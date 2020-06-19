@@ -3,12 +3,12 @@
 (declare available-icon-colors)
 
 (def default-db {
-                 :sync-state    :up-to-date
-                 :init {
-                        :initialization-done false
-                        :show-init-modal true
-                        }
-                 :active-panel   :idea-grid
+                 :sync-state     :up-to-date
+                 :init           {
+                                  :initialization-done false
+                                  :show-init-modal     true
+                                  }
+                 :active-tab     :idea-grid
                  :active-toolbox {
                                   :title "marker-toolbox"
                                   }
@@ -30,7 +30,7 @@
                                   "http://dbpedia.org/resource/Human"      {:id    "http://dbpedia.org/resource/Human"
                                                                             :label "Human"}
                                   }
-                 :marker-list ["http://dbpedia.org/resource/Animal" "http://dbpedia.org/resource/Clothing" "http://dbpedia.org/resource/Technology" "http://dbpedia.org/resource/Human" "http://dbpedia.org/resource/Material"]
+                 :marker-list    ["http://dbpedia.org/resource/Animal" "http://dbpedia.org/resource/Clothing" "http://dbpedia.org/resource/Technology" "http://dbpedia.org/resource/Human" "http://dbpedia.org/resource/Material"]
                  :all-ideas      {
                                   "019cb2eb-d6ee-4fba-abfc-181ce89fa213" {
                                                                           :id          "019cb2eb-d6ee-4fba-abfc-181ce89fa213"

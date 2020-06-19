@@ -2,6 +2,11 @@
   (:require [re-frame.core :as rf]))
 
 
+(rf/reg-sub
+  ::active-tab
+  (fn [db _]
+    (:active-tab db)))
+
 (defn fmap [f m]
   (zipmap (keys m) (map f (vals m))))
 
