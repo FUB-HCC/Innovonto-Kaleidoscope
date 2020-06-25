@@ -8,7 +8,6 @@
             [reitit.ring.middleware.muuntaja :as muuntaja]
             [reitit.ring.middleware.exception :as exception]
             [ring.middleware.json :refer [wrap-json-response wrap-json-body]]
-            [ring.middleware.defaults :refer :all]
             [hcc.innovonto.kaleidoscope.rdf-backend :as rdf]
             [clojure.pprint :as pprint])
   (:gen-class)
