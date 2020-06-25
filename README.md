@@ -5,8 +5,14 @@
 Kaleidoscope is a tool for exploratory analysis of RDF-encoded idea data. It enables you to get an overview over imported
 idea texts, and recurring themes within them, by interactively marking concepts used within the idea texts.
 
+If you want to try it, there is a demo running at: https://innovonto-kaleidoscope-demo.herokuapp.com/
+
 ## What is Kaleidoscope? What can I do with it?
 TODO: Screenshot main interface
+
+Kaleidoscope was initialy started, to ...
+In our research project [Innovonto](innovonto-core.imp.fu-berlin.de/) we collect large numbers of short text snippets 
+containing ideas on how to apply new technologies in everyday products. 
 
 Context: ICV, Innovonto Research Project
 

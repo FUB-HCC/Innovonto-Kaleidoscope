@@ -2,8 +2,7 @@
   (:require [hcc.innovonto.kaleidoscope.api :as api]
             [re-frame.core :as rf]
             [day8.re-frame.http-fx]
-            [ajax.core :as ajax]
-            [sparql-client.format :as sparql]))
+            [ajax.core :as ajax]))
 
 ;; DEBUG EVENTS
 (rf/reg-event-db

@@ -4,7 +4,8 @@
 
 ;;TODO make configurable
 ;;TODO add a way to upload your own file.
-(def api-endpoint "http://localhost:3030/ac2/sparql")
+;;(def api-endpoint "http://localhost:3030/ac2/sparql")
+(def api-endpoint "https://innovonto-core.imp.fu-berlin.de/management/core/query")
 
 (sparql-client/defquery all-ideas-query "queries/all-ideas.sparql" {:connection api-endpoint})
 (sparql-client/defquery ideas-by-wikidata-marker "queries/ideas-by-wikidata-marker.sparql" {:connection api-endpoint})
@@ -13,9 +14,8 @@
 
 
 ;;TODO include the application-case into the query.
-;;TODO limit does not work
-(defn get-all-ideas []
-  (with-open [response (all-ideas-query {:limit 10})]
+(defn get-all-ideas [{:keys [limit]}]
+  (with-open [response (all-ideas-query {:limit limit})]
     (let [result (sparql-utils/copy-result-set (sparql-utils/->result response))]
       (sparql-utils/result->json result))))
 

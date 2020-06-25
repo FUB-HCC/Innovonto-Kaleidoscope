@@ -134,7 +134,7 @@
      (case (:title active-toolbox)
        "marker-toolbox" [marker-toolbox]
        "idea-details" [idea-toolbox (:idea active-toolbox)]
-       [:span "Default Case: Error"]))])
+       [:span "Idea Grid Tab failed to load."]))])
 
 (defn tab [title keyword current-active]
   [:div.tab (when (= current-active keyword) {:class "active"})
@@ -153,7 +153,7 @@
        :review [review/review-tab]
        :export [export/export-tab]
        :config [config/config-tab]
-       [:span "Default Case: Error"])
+       [:span "Switch Pane failed to load."])
      ]))
 
 (defn debug-buttons []

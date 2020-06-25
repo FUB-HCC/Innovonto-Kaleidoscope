@@ -1,9 +1,10 @@
 (ns hcc.innovonto.kaleidoscope.init.events
   (:require [re-frame.core :as rf]
-            [sparql-client.client :as sparql-client]
             [hcc.innovonto.kaleidoscope.api :as api]
             [clojure.string :as string]
-            [hcc.innovonto.kaleidoscope.db :as db]))
+            [hcc.innovonto.kaleidoscope.db :as db]
+            [ajax.core :as ajax]
+            [cljs.pprint :as pprint]))
 
 (rf/reg-event-db
   ::reset
@@ -25,18 +26,13 @@
   (fn [db [_ sparql-endpoint]]
     (assoc-in db [:init :sparql-endpoint] sparql-endpoint)))
 
-;[[::tracking/track {:type :validate-annotation-candidate
-;                                       :id   id
-;                                       :text (:text (:current-annotation-candidate (:icv db)))}]
-;                    [::move-to-next-annotation-candidate]]
+;;TODO spec: session-id
 (rf/reg-event-fx
-  ::init-app
-  (fn [{:keys [db]} [_ _]]
-    (println "init kaleidoscope! Config is" (:init db))
+  ::session-init-successful
+  (fn [{:keys [db]} [_ response]]
+    (println "init successful. Session-id is: " (:session-id response))
     {
-     ;;TODO update the sparql-endpoint that is used by the sparql-client
      :db         (-> db
-                     (assoc-in [:init :initialization-done] true)
                      (assoc-in [:init :show-init-modal] false))
      :dispatch-n [
                   [::update-ideas]
@@ -44,15 +40,27 @@
                   [::update-snapshots]]
      }))
 
-;;TODO init-ideas, init-marker, init snapshots
-;;TODO start a new kaleidoscope session at the server, with the given config.
-;; - Create a session-identifier
-;; - Upload and parse the file if needed
-;; - Check the sparql-endpoint if needed
-;; return idea map config:
-;; - :marker
-;; -
-;; -
+;;TODO implement: show red frames, error messages in the init-modal
+(rf/reg-event-db
+  ::error-in-init-config
+  (fn [db [_ errors]]
+    db))
+
+(rf/reg-event-fx
+  ::initialize-session
+  (fn [{:keys [db]} [_ _]]
+    (println "init kaleidoscope! Config is" (:init db))
+    {
+     ;;TODO set loading state of init button :initialization-done :in-progress?
+     :db         (assoc-in db [:init :initialization-done] true)
+     :http-xhrio {
+                  :method          :put
+                  :uri             (api/backend-url-for ::api/session nil)
+                  :params          (:init db)
+                  :format          (ajax/json-request-format)
+                  :response-format (ajax/json-response-format {:keywords? true})
+                  :on-success      [::session-init-successful]
+                  :on-failure      [::error-in-init-config]}}))
 
 ;;API: GET ALL
 (defn get-id [binding-response]
@@ -76,19 +84,26 @@
 (rf/reg-event-db
   ::initialize-cell-map
   (fn [db [_ response]]
+    (println (:active-tab db))
     (-> db
         (assoc :sync-state :up-to-date)
         (assoc :all-ideas (convert-to-db-structure response)))))
 
+;;TODO: own loading state for: cellmap, marker-component, snapshot-component
 (rf/reg-event-fx
   ::update-ideas
   (fn [{:keys [db]} _]
     {
      :db         (assoc-in db [:sync-state] :loading)
-     :http-xhrio (sparql-client/query-request {
-                                               :query      (api/all-ideas-query 81)
-                                               :on-success [::initialize-cell-map]
-                                               :on-failure [::generic-ajax-error]})}))
+     ;;TODO limit?
+     :http-xhrio {
+                  :method          :get
+                  :uri             (api/backend-url-for ::api/all-ideas nil)
+                  :format          (ajax/json-request-format)
+                  :response-format (ajax/json-response-format {:keywords? true})
+                  :on-success      [::initialize-cell-map]
+                  :on-failure      [::generic-ajax-error]}}))
+
 
 (rf/reg-event-db
   ::initialize-available-marker-component
@@ -103,10 +118,13 @@
   (fn [{:keys [db]} _]
     {
      :db         (assoc-in db [:sync-state] :loading)
-     :http-xhrio (sparql-client/query-request {
-                                               :query      (api/available-markers-query)
-                                               :on-success [::initialize-available-marker-component]
-                                               :on-failure [::generic-ajax-error]})}))
+     :http-xhrio {
+                  :method          :get
+                  :uri             (api/backend-url-for ::api/available-marker nil)
+                  :format          (ajax/json-request-format)
+                  :response-format (ajax/json-response-format {:keywords? true})
+                  :on-success      [::initialize-available-marker-component]
+                  :on-failure      [::generic-ajax-error]}}))
 
 (rf/reg-event-fx
   ::update-snapshots

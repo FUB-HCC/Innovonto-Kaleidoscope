@@ -15,14 +15,14 @@
                  [http-kit "2.3.0"]
                  [ring/ring-core "1.8.1"]
                  [ring-cors "0.1.13"]
+                 [ring/ring-json "0.5.0"]
                  [cprop "0.1.17"]
                  ;;CLIENT
                  [org.clojure/clojurescript "1.10.773"]
                  [reagent "0.10.0"]
                  [re-frame "0.12.0"]
                  [re-com "2.8.0"]
-                 [day8.re-frame/http-fx "v0.2.0"]
-                 [cljs-ajax "0.8.0"]]
+                 [day8.re-frame/http-fx "v0.2.0"]]
 
   :source-paths ["src/clj" "src/cljs"]
   :resource-paths ["resources"]

@@ -48,7 +48,8 @@
      or problems, please contact us at kaleidoscope@zvaadw.de"]]
        [:div
         [:button
+         ;;TODO loading state for the button
          (if @(rf/subscribe [::subs/configured?])
-           {:on-click #(rf/dispatch [::events/init-app])}
+           {:on-click #(rf/dispatch [::events/initialize-session])}
            {:disabled true})
          "Continue"]]]]]))

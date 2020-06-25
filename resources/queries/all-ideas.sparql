@@ -5,4 +5,4 @@ WHERE {
   ?idea a gi2mo:Idea.
   ?idea gi2mo:content ?content
 }
-LIMIT 80
+LIMIT 1

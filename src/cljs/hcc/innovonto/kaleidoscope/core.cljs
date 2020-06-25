@@ -4,8 +4,7 @@
     [hcc.innovonto.kaleidoscope.views :as views]
     [re-frame.core :as rf]
     [hcc.innovonto.kaleidoscope.db :as db]
-    [reagent.dom :as rdom]
-    [sparql-client.client :as sparql-client]))
+    [reagent.dom :as rdom]))
 
 ;;TODO remove after other tests have been implemented
 (defn multiply [a b] (* a b))
