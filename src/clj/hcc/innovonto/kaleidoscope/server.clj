@@ -4,8 +4,11 @@
             [reitit.ring :as reitit-ring]
             [ring.util.response :as res]
             [ring.middleware.cors :refer [wrap-cors]]
-            [ring.middleware.resource :refer [wrap-resource]]
+            [reitit.ring.middleware.parameters :as parameters]
+            [reitit.ring.middleware.muuntaja :as muuntaja]
+            [reitit.ring.middleware.exception :as exception]
             [ring.middleware.json :refer [wrap-json-response wrap-json-body]]
+            [ring.middleware.defaults :refer :all]
             [hcc.innovonto.kaleidoscope.rdf-backend :as rdf]
             [clojure.pprint :as pprint])
   (:gen-class)
@@ -24,10 +27,11 @@
    :body    (rdf/get-available-marker)})
 
 (defn find-by-marker-id-handler [req]
-  (if (contains? (:path-params req) :id)
-    {:status  200
-     :headers {"Content-Type" "application/json"}
-     :body    (rdf/ideas-containing-marker (:id (:path-params req)))}
+  (if (contains? (:params req) "marker-id")
+    (let [marker (get (:params req) "marker-id")]
+      {:status  200
+       :headers {"Content-Type" "application/json"}
+       :body    (rdf/ideas-containing-marker marker)})
     {
      :status  400
      :headers {"Content-Type" "application/json"}
@@ -47,12 +51,16 @@
       ["/api"
        ["/session" {:put (wrap-json-response (wrap-json-body create-session-handler {:keywords? true}))}]
        ["/ideas" {:get get-all-ideas-handler}]
-       ["/marker" {:get get-available-marker-handler}]
-       ["/marker/:id/ideas" {:get find-by-marker-id-handler}]])
+       ["/ideas/by-marker" {:get find-by-marker-id-handler}]
+       ["/marker" {:get get-available-marker-handler}]])
     (reitit-ring/routes
       (reitit-ring/redirect-trailing-slash-handler)
       (reitit-ring/create-resource-handler {:path "/"})
-      (reitit-ring/create-default-handler {:method :add}))))
+      (reitit-ring/create-default-handler {:method :add}))
+    {:middleware [parameters/parameters-middleware
+                  muuntaja/format-negotiate-middleware
+                  muuntaja/format-response-middleware
+                  exception/exception-middleware]}))
 
 (def app
   (-> app-routes

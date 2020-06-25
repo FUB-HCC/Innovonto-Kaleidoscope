@@ -8,26 +8,27 @@ idea texts, and recurring themes within them, by interactively marking concepts 
 If you want to try it, there is a demo running at: https://innovonto-kaleidoscope-demo.herokuapp.com/
 
 ## What is Kaleidoscope? What can I do with it?
-TODO: Screenshot main interface
+![Screenshot of the Kaleidoscope Main Interface](docs/screenshot.png)
 
-Kaleidoscope was initialy started, to ...
 In our research project [Innovonto](innovonto-core.imp.fu-berlin.de/) we collect large numbers of short text snippets 
-containing ideas on how to apply new technologies in everyday products. 
+containing ideas on how to apply new technologies in everyday products. To make the content of the idea texts computationally accessible,
+we asked contributors to annotate key concepts within the idea texts, using an approach we called [Interactive Concept Validation](https://github.com/FUB-HCC/Innovonto-ICV).
+**Kaleidoscope** gives a way to make the annotations within a dataset visible: By selecting concepts, you query the idea data and all ideas matching the concept will be
+highlighted by the marker you selected (see screenshot above).
 
-Context: ICV, Innovonto Research Project
+This is a re-frame based implementation of the Kaleidoscope Tool for exploratory Analysis of RDF-Data. For more Information
+ please have a look at the poster we submitted at UIST 2018:
 
-This is a re-frame based implementation of the Kaleidoscope Tool for exploratory Analysis of RDF-Data. For more Information you can look at the poster we submitted at UIST 2018:
+Mackeprang, M., Strama, J., Schneider, G., Kuhnz, P., Benjamin, J. J., & Müller-Birn, C. (2018, October). 
+[Kaleidoscope: An RDF-based Exploratory Data Analysis Tool for Ideation Outcomes.](https://dl.acm.org/doi/abs/10.1145/3266037.3266106)
+In The 31st Annual ACM Symposium on User Interface Software and Technology Adjunct Proceedings (pp. 75-77).
 
-Mackeprang, Maximilian, et al. "Kaleidoscope: An RDF-based Exploratory Data Analysis Tool for Ideation Outcomes." The 31st Annual ACM Symposium on User Interface Software and Technology Adjunct Proceedings. ACM, 2018.
-
-![Kaleidoscope Icon](icon.png)
 
 ## Running Kaleidoscope
 
 You will need Leiningen (at least Version 2.7.1).
-Furthermore, you will need a runnning Fuseki backend, to provide the data.
 
-To run the Backend, change into the parent directory and run:
+To run the Server, change into the parent directory and run:
 ```
     lein run.
 ```
@@ -41,21 +42,21 @@ To run the dev build for the Frontend, run this, in addition to the backend:
 
 
 ## TODOs
+### Backend Functionality
+* Right now the ideas/per-marker route is not rest-style, because markers take the form 
+"http://dbpedia.org/resource/Scenario". Can i somehow improve this?
+
 ### Style
  * use same colors
- * include dummy-data
- * favicon
+ * toolbox centering
 
 ### Frontend Functionality
-* init-function (inits: cells, available markers)
-* ordered available markers
-* marker visible/invisible
 
 #### idea-detail view
+* describe query for more info?
 * annotations (like, rate, tag)
 * Text-Annotation
 * Created-By
-
 
 #### CSS Fixes:
 * available markers: searhc marker form
@@ -73,6 +74,7 @@ To run the dev build for the Frontend, run this, in addition to the backend:
 * Similar Ideas
 * T-Sne + Grid-Mapping Algorithm
 * search marker
+* Clustering
 
 Indexed Entity pattern
 https://purelyfunctional.tv/guide/database-structure-in-re-frame/
@@ -189,9 +191,10 @@ https://github.com/circleci/frontend
 
 
 ## License
+
 This project is distributed under the GNU Affero General Public License v3 (AGPL-3.0) (see LICENSE file)
 
 ## Acknowledgements
 
-TODO
-
+I would like to thank Gerold Schneider, Johann Strama and Philipp Kuhnz for contributing the concept for Kaleidoscope
+as well as a framer-based prototype.

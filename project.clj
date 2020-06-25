@@ -11,6 +11,7 @@
                  [metosin/reitit "0.5.2"]
                  ;;SERVER
                  [metosin/reitit-ring "0.5.2"]
+                 [metosin/reitit-middleware "0.5.2"]
                  [yesparql "0.3.3"]
                  [http-kit "2.3.0"]
                  [ring/ring-core "1.8.1"]

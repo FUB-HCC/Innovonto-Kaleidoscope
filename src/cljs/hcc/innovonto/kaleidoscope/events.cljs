@@ -93,7 +93,8 @@
     {:db         (update-in db [:marker marker-id] to-selected-marker)
      :http-xhrio {
                   :method          :get
-                  :uri             (api/backend-url-for ::api/ideas-by-marker {:id (:marker-id marker-id)})
+                  :uri             (api/backend-url-for ::api/ideas-by-marker nil)
+                  :params          {:marker-id marker-id}
                   :format          (ajax/json-request-format)
                   :response-format (ajax/json-response-format {:keywords? true})
                   :on-success      [::add-marker-to-ideas marker-id]

@@ -13,8 +13,8 @@
     ["/api"
      ["/session" ::session]
      ["/ideas" ::all-ideas]
-     ["/marker" ::available-marker]
-     ["/marker/:id/ideas" ::ideas-by-marker]]))
+     ["/ideas/by-marker" ::ideas-by-marker]
+     ["/marker" ::available-marker]]))
 
 ;;TODO make params optional
 (defn backend-url-for [name params]
