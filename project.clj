@@ -10,6 +10,8 @@
                  ;; COMMON
                  [metosin/reitit "0.5.2"]
                  ;;SERVER
+                 [cprop "0.1.17"]
+                 [mount "0.1.16"]
                  [metosin/reitit-ring "0.5.2"]
                  [metosin/reitit-middleware "0.5.2"]
                  [yesparql "0.3.3"]
@@ -17,7 +19,10 @@
                  [ring/ring-core "1.8.1"]
                  [ring-cors "0.1.13"]
                  [ring/ring-json "0.5.0"]
-                 [cprop "0.1.17"]
+
+                 [conman "0.8.9"]
+                 [org.xerial/sqlite-jdbc "3.20.0"]
+
                  ;;CLIENT
                  [org.clojure/clojurescript "1.10.773"]
                  [reagent "0.10.0"]
@@ -31,7 +36,7 @@
   :target-path "target/%s/"
 
   :clean-targets ^{:protect false} ["target/%s/" "resources/public/cljs-out"]
-  :main ^:skip-aot hcc.innovonto.kaleidoscope.server
+  :main ^:skip-aot hcc.innovonto.kaleidoscope.server.core
 
   :aliases {"fig"       ["trampoline" "run" "-m" "figwheel.main"]
             "fig:build" ["trampoline" "run" "-m" "figwheel.main" "-b" "dev" "-r"]

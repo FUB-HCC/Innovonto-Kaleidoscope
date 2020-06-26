@@ -1,6 +1,6 @@
-(ns hcc.innovonto.kaleidoscope.server
-  (:require [cprop.core :as cprop]
-            [org.httpkit.server :as server]
+(ns hcc.innovonto.kaleidoscope.server.handler
+  (:require [mount.core :refer [defstate]]
+            [org.httpkit.server :as http]
             [reitit.ring :as reitit-ring]
             [ring.util.response :as res]
             [ring.middleware.cors :refer [wrap-cors]]
@@ -8,12 +8,10 @@
             [reitit.ring.middleware.muuntaja :as muuntaja]
             [reitit.ring.middleware.exception :as exception]
             [ring.middleware.json :refer [wrap-json-response wrap-json-body]]
-            [hcc.innovonto.kaleidoscope.rdf-backend :as rdf]
-            [clojure.pprint :as pprint])
-  (:gen-class)
+            [hcc.innovonto.kaleidoscope.server.rdf-backend :as rdf]
+            [clojure.pprint :as pprint]
+            [mount.core :as mount])
   (:import (java.util UUID)))
-
-;;TODO https://github.com/joelkuiper/yesparql#tdb
 
 (defn get-all-ideas-handler [req]
   {:status  200
@@ -68,11 +66,7 @@
         :access-control-allow-headers ["Content-Type"]
         :access-control-allow-methods [:get :put :post :delete :options])))
 
-(defn -main
-  "This is our app's entry point"
-  [& args]
-  (let [config (cprop/load-config)
-        port (get config :port 6001)]
-    (println (str "Using config: " config))
-    (server/run-server #'app {:port port})
-    (println (str "Running webserver at http:/127.0.0.1:" port "/"))))
+;;TODO doesn't work as of now: does not block
+(defstate server
+          :start (http/run-server #'app (:port mount/args))
+          :stop (server :timeout 100))

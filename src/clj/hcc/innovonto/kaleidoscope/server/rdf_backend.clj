@@ -1,4 +1,4 @@
-(ns hcc.innovonto.kaleidoscope.rdf-backend
+(ns hcc.innovonto.kaleidoscope.server.rdf-backend
   (:require [yesparql.core :as sparql-client]
             [yesparql.sparql :as sparql-utils]))
 
@@ -7,10 +7,10 @@
 ;;(def api-endpoint "http://localhost:3030/ac2/sparql")
 (def api-endpoint "https://innovonto-core.imp.fu-berlin.de/management/core/query")
 
-(sparql-client/defquery all-ideas-query "queries/all-ideas.sparql" {:connection api-endpoint})
-(sparql-client/defquery ideas-by-wikidata-marker "queries/ideas-by-wikidata-marker.sparql" {:connection api-endpoint})
-(sparql-client/defquery ideas-by-dbpedia-marker "queries/ideas-by-dbpedia-marker.sparql" {:connection api-endpoint})
-(sparql-client/defquery available-marker "queries/available-marker.sparql" {:connection api-endpoint})
+(sparql-client/defquery all-ideas-query "sparql/all-ideas.sparql" {:connection api-endpoint})
+(sparql-client/defquery ideas-by-wikidata-marker "sparql/ideas-by-wikidata-marker.sparql" {:connection api-endpoint})
+(sparql-client/defquery ideas-by-dbpedia-marker "sparql/ideas-by-dbpedia-marker.sparql" {:connection api-endpoint})
+(sparql-client/defquery available-marker "sparql/available-marker.sparql" {:connection api-endpoint})
 
 
 ;;TODO include the application-case into the query.
