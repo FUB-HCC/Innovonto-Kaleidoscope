@@ -84,6 +84,16 @@
    :color (get marker :color "#9C9C9C")
    })
 
+(defn find-marker-by-label [db label]
+  (let [available-marker (for [[_ v] (:marker db)] v)]
+    (first (filter #(= (:label %1) label) available-marker))))
+
+(rf/reg-event-fx
+  ::add-marker-by-label
+  (fn [{:keys [db]} [_ marker-label]]
+    {
+     :dispatch [::add-marker (:id (find-marker-by-label db marker-label))]
+     }))
 
 ;;TODO check if i can do to-selected marker without explicit argument
 ;;TODO handle nil in update-in (fnil inc 0)

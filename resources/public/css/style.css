@@ -219,6 +219,28 @@ shadowBlur : 0,
     flex-wrap: wrap;
 }
 
+.marker-search-box {
+    display: flex;
+    align-items: center;
+    margin: 0.5rem 0;
+}
+
+.marker-search-item {
+    background: #C0C0C0;
+    padding: 0.2rem;
+    color: #808080;
+    cursor: default;
+}
+
+.marker-search-item:hover,
+.marker-search-item:focus {
+    cursor: default !important;
+}
+
+.reagent-autocomplete-input {
+    background: white !important;
+    font-size: 1rem !important;
+}
 
 /* Snapshots */
 .snapshot-pane {

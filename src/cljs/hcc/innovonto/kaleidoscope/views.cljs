@@ -9,6 +9,7 @@
             [hcc.innovonto.kaleidoscope.components.exporttab :as export]
             [hcc.innovonto.kaleidoscope.components.reviewtab :as review]
             [hcc.innovonto.kaleidoscope.components.idea-details :as idea-details]
+            [thereisnodot.reagent-autocomplete.core :as autocomplete]
             [re-com.popover :as popover]
             [re-frame.core :as rf]
             [reagent.core :as reagent]))
@@ -18,16 +19,38 @@
   [:h1 "Kaleidoscope 0.5.0"])
 
 (defn add-new-marker []
-  [:div
-   [:i.material-icons "add"]
-   [:input {:type "text" :placeholder "Search marker..."}]])
+  (let [available-marker-list @(rf/subscribe [::subs/ordered-available-marker])
+        available-marker-labels (into [] (map :label available-marker-list))]
+    [:div.marker-search-box
+     [:i.material-icons.marker-search-item "add"]
+     [autocomplete/autocomplete_widget
+      available-marker-labels
+      {:can-enter-new?   false
+       :display-size     1
+       :placeholder      "Search marker..."
+       :parent-div-style {:width "100%" :position "relative"}
+       :click-submit-style {:position "absolute"
+                            :right "0"
+                            :top "0"
+                            :padding "0"}
+       :dropdown-style   {:position "absolute"
+                          :right "0"
+                          :left "0"
+                          :top "2em"
+                          :box-shadow "grey 1px 2px 1px 0px"
+                          :background "white"
+                          :overflow "hidden"
+                          :border "none" :z-index "999"}
+       :submit-fn        #(rf/dispatch [::events/add-marker-by-label %1])}]]))
 
 (defn select-color-icon [marker-id [_ val]]
-  [:i.material-icons {:on-click #(rf/dispatch [::events/update-color marker-id val])
+  [:i.material-icons {:key val
+                      :on-click #(rf/dispatch [::events/update-color marker-id val])
                       :style    {:color val}} "fiber_manual_record"])
 
 (defn select-shape-icon [marker-id shape]
-  [:i.material-icons {:on-click #(rf/dispatch [::events/update-icon marker-id shape])
+  [:i.material-icons {:key shape
+                      :on-click #(rf/dispatch [::events/update-icon marker-id shape])
                       :style    {:color (:gray db/available-icon-colors)}} shape])
 
 ;;TODO add backdrop
