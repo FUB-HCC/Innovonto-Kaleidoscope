@@ -114,3 +114,27 @@
                                :title "idea-details"
                                :idea  idea-id
                                })))
+
+(rf/reg-event-db
+  ::toggle-visibility
+  (fn [db [_ idea]]
+    (update-in db [:all-ideas (:id idea) :visible] not)))
+
+(rf/reg-event-db
+  ::toggle-favorite
+  (fn [db [_ idea]]
+    (update-in db [:all-ideas (:id idea) :favorite] not)))
+
+(rf/reg-event-db
+  ::reset-rating
+  (fn [db [_ idea new-rating]]
+    (assoc-in db [:all-ideas (:id idea) :rating] new-rating)))
+
+(def conj-with-default (fnil conj #{} :blue))
+
+(rf/reg-event-db
+  ::toggle-label
+  (fn [db [_ idea color]]
+    (if (contains? (get-in db [:all-ideas (:id idea) :label]) color)
+      (update-in db [:all-ideas (:id idea) :label] #(disj %1 color))
+      (update-in db [:all-ideas (:id idea) :label] #(conj-with-default %1 color)))))

@@ -66,20 +66,23 @@
 (defn get-id [binding-response]
   (last (string/split (:value (:idea binding-response)) #"/")))
 
-(defn convert [element]
-  {:id      (get-id element)
-   :content (:value (:content element))
-   :marker  #{}})
+(defn get-local-id [iri]
+  (last (string/split iri #"/")))
 
-(defn convert-one [result [head & tail]]
-  (if (nil? head)
-    result
-    (convert-one (assoc result (get-id head) (convert head)) tail)))
+(defn convert-one [input]
+  (let [local-id (get-local-id (:value (:idea input)))]
+    [local-id
+     {
+      :id      local-id
+      :creator (get-local-id (:value (:creator input)))
+      :content (:value (:content input))
+      :marker  #{}}]))
 
 (defn convert-to-db-structure [server-response]
   (let [response-ideas (:bindings (:results server-response))
-        result-map {}]
-    (convert-one result-map response-ideas)))
+        mappings (into [] (map convert-one response-ideas))]
+    (println mappings)
+    (into (sorted-map) mappings)))
 
 (rf/reg-event-db
   ::initialize-cell-map

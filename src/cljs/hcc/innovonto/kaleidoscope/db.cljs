@@ -40,6 +40,10 @@
                                                                                          "http://dbpedia.org/resource/Material"
                                                                                          }
                                                                           :annotations {}
+                                                                          :visible true
+                                                                          :rating nil
+                                                                          :label #{}
+                                                                          :favorite false
                                                                           }
                                   "033ae853-c609-4594-a4b1-699ce2d4b248" {
                                                                           :id          "033ae853-c609-4594-a4b1-699ce2d4b248"

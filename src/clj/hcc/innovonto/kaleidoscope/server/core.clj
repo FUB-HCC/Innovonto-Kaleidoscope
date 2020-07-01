@@ -4,12 +4,11 @@
             [hcc.innovonto.kaleidoscope.server.handler :as handler]
             [cprop.core :as cprop]
             [org.httpkit.server :as http])
-  (:gen-class)
-  )
+  (:gen-class))
 
 ;;This does not block.
 (defn -main
-  "This is our app's entry point"
+  "Kaleidoscope server main: starts database, http server and rdf utils. "
   [& args]
   (let [config (cprop/load-config)
         port (get config :port 6001)]

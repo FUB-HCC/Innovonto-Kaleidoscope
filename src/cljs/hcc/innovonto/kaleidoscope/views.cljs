@@ -8,21 +8,12 @@
             [hcc.innovonto.kaleidoscope.components.configtab :as config]
             [hcc.innovonto.kaleidoscope.components.exporttab :as export]
             [hcc.innovonto.kaleidoscope.components.reviewtab :as review]
+            [hcc.innovonto.kaleidoscope.components.idea-details :as idea-details]
             [re-com.popover :as popover]
             [re-frame.core :as rf]
             [reagent.core :as reagent]))
 
 
-;this.titleComp = new TextLayer({
-;                                parent: this,
-;                                x: 8, y: 0, color: '#333',
-;    width: Canvas.width,
-;                                height: 42,
-;                                padding: 10,
-;                                text: 'Kaleidoscope 0.4.1',
-;                                            font: BOLD_FONT_LARGE,
-;                                backgroundColor: Colors.c_none,
-;                                });
 (defn header []
   [:h1 "Kaleidoscope 0.5.0"])
 
@@ -105,27 +96,12 @@
 
 (defn marker-toolbox []
   [:div.toolbox
-   [:h2 "Marker"]
+   [:div.toolbox-header
+    [:h2 "Marker"]]
    [:div.toolbox-body
     [selected-marker-pane]
     [snapshot-pane]
     [available-marker-pane]]])
-
-(defn idea-toolbox [active-idea-id]
-  (let [active-idea @(rf/subscribe [::subs/idea-details active-idea-id])]
-    [:div.toolbox
-     [:div.idea-toolbox-header
-      [:span.close {:on-click #(rf/dispatch [::events/close-idea-toolbox])} "×"]]
-     [:div.idea-toolbox-body
-      [:h3 (:id active-idea)]
-      [:span "Created By Foo"]
-      [:div
-       [:p (:content active-idea)]]
-      ;;[:h4 "Similar Ideas"]
-      ;;[:span "TODO"]
-      ]
-     [:div.idea-toolbox-annotations]
-     ]))
 
 (defn idea-grid-tab []
   [:div.tab-container
@@ -133,7 +109,7 @@
    (let [active-toolbox @(rf/subscribe [::subs/active-toolbox])]
      (case (:title active-toolbox)
        "marker-toolbox" [marker-toolbox]
-       "idea-details" [idea-toolbox (:idea active-toolbox)]
+       "idea-details" [idea-details/toolbox (:idea active-toolbox)]
        [:span "Idea Grid Tab failed to load."]))])
 
 (defn tab [title keyword current-active]

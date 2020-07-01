@@ -59,7 +59,7 @@ h3 {
     cursor: pointer;
     color: white;
     background-color: gray;
-    padding: 0.3rem 1rem;
+    padding: 0.4rem 2rem;
     font-size: 16px;
     font-weight: 700;
 }
@@ -165,6 +165,12 @@ shadowBlur : 0,
     background-color: #DCDCDC;
 }
 
+.toolbox-header {
+    background-color: black;
+    color: white;
+    height: 2rem;
+}
+
 .toolbox-body {
     padding: 0.4rem;
 }
@@ -177,13 +183,14 @@ shadowBlur : 0,
 
 /* TODO toolbox-row-element-icon? tollbox-row-element-toolbar? */
 
-.idea-toolbox-header {
-    background-color: black;
-    color: white;
+.idea-details-header {
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding-right: 1rem;
+    padding-left: 1rem;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 /* Active Markers */
@@ -264,22 +271,25 @@ shadowBlur : 0,
 
 .modal-content {
     background-color: #fefefe;
+    max-width: 50rem;
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
     width: 80%; /* Could be more or less, depending on screen size */
+    animation: fadein 1s;
+    border-radius: 5px;
 }
 
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
+@keyframes fadein {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
-.close:hover,
-.close:focus {
-    color: black;
+.material-icons:hover, .material-icons:focus {
     text-decoration: none;
     cursor: pointer;
 }
@@ -320,4 +330,8 @@ shadowBlur : 0,
     100% {
         transform: rotate(360deg);
     }
+}
+
+.label-bar {
+    display: flex;
 }

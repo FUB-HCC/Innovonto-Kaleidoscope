@@ -1,3 +1,5 @@
+-- loosely based on: https://stackoverflow.com/questions/11337324/how-to-efficient-insert-and-fetch-uuid-in-core-data/11337522#11337522
+-- https://github.com/layerware/hugsql/blob/master/examples/princess-bride/src/princess_bride/db/sql/characters.sql
 -- :name create-session-table! :!
 create table sessions (
     id TEXT,

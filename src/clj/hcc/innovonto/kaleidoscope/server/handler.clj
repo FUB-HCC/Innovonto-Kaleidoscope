@@ -16,7 +16,7 @@
 (defn get-all-ideas-handler [req]
   {:status  200
    :headers {"Content-Type" "application/json"}
-   :body    (rdf/get-all-ideas {:limit 81})})
+   :body    (rdf/get-all-ideas {:limit 10})})
 
 (defn get-available-marker-handler [req]
   {:status  200

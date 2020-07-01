@@ -1,8 +1,10 @@
 PREFIX gi2mo:<http://purl.org/gi2mo/ns#>
+PREFIX dcterms:<http://purl.org/dc/terms/>
 
-SELECT ?idea ?content
+SELECT ?idea ?content ?creator
 WHERE {
   ?idea a gi2mo:Idea.
-  ?idea gi2mo:content ?content
+  ?idea gi2mo:content ?content.
+  { OPTIONAL { ?idea dcterms:creator ?creator } }
 }
 LIMIT 1

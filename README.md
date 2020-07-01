@@ -49,8 +49,12 @@ To run the dev build for the Frontend, run this, in addition to the backend:
 ### Style
  * use same colors
  * toolbox centering
+ * css animation for init modal
 
 ### Frontend Functionality
+* Export Tab
+* Available Marker Search
+* Available Marker Paging
 
 #### idea-detail view
 * describe query for more info?
@@ -59,7 +63,7 @@ To run the dev build for the Frontend, run this, in addition to the backend:
 * Created-By
 
 #### CSS Fixes:
-* available markers: searhc marker form
+* available markers: search marker form
 * available markers +
 * selected markers icon
 * selected Markers Toolbar
@@ -69,12 +73,13 @@ To run the dev build for the Frontend, run this, in addition to the backend:
 
 
 #### Low-Prio
-* snapshots
-* tabs
+* snapshots in sqlite db
+  * https://dba.stackexchange.com/questions/122198/is-it-possible-to-store-and-query-json-in-sqlite
 * Similar Ideas
 * T-Sne + Grid-Mapping Algorithm
 * search marker
 * Clustering
+* Review Tab
 
 Indexed Entity pattern
 https://purelyfunctional.tv/guide/database-structure-in-re-frame/
