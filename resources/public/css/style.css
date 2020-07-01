@@ -175,41 +175,70 @@ shadowBlur : 0,
     padding: 0.4rem;
 }
 
-
 .toolbox-row-element {
+    display: flex;
+    align-items: center;
+    background-color: rgb(230, 230, 230);
     padding: 0.2rem;
     margin-bottom: 1px;
 }
 
-/* TODO toolbox-row-element-icon? tollbox-row-element-toolbar? */
-
-.idea-details-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding-right: 1rem;
-    padding-left: 1rem;
-    font-size: 16px;
-    font-weight: 700;
-}
-
-/* Active Markers */
-.active-marker {
-    display: flex;
-    align-items: center;
-    background-color: rgb(230, 230, 230);
-}
-
-.active-marker-label {
-    margin-left: 0.2rem;
-    flex-grow: 4;
-}
-
-.active-marker-colorpicker {
+.toolbox-row-button {
     cursor: pointer;
     background: rgb(216, 216, 216);
     padding: 0.3rem;
     color: rgb(156, 156, 156);
+}
+
+.marker-toolbox-header {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+.idea-details-header {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+.idea-details-header i {
+    font-size: 16px !important;
+}
+
+.idea-toolbox-body {
+    background: white;
+    border: 1px solid rgb(241, 240, 240);
+    padding: 0.3rem;
+}
+.idea-toolbox-body h2 {
+    font-size: 1.3rem;
+    background: white;
+    color: black;
+}
+
+.idea-subtitle {
+    font-size: 0.9rem;
+    color: #999;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+.idea-content {
+    margin-bottom: 2rem;
+}
+
+/* Active Markers */
+.active-marker-label {
+    margin-left: 0.2rem;
+    flex-grow: 4;
 }
 
 .active-marker-toolbar {
@@ -223,13 +252,18 @@ shadowBlur : 0,
     cursor: pointer;
 }
 
-.toolbar-item.disabled {
+.disabled {
     color: rgb(216, 216, 216);
     cursor: default;
 }
 
-.toolbar-item.disabled:hover,
-.toolbar-item.disabled:focus {
+.disabled:hover,
+.disabled:focus {
+    cursor: default;
+}
+
+.disabled i:hover,
+.disabled i:focus {
     cursor: default;
 }
 
@@ -291,6 +325,12 @@ shadowBlur : 0,
 .available-marker {
     background-color: rgb(230, 230, 230);
     cursor: pointer;
+}
+
+.available-marker-paging {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cell-container {

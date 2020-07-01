@@ -3,6 +3,12 @@
 
 (defn export-tab []
   [:div.tab-container
-   [:h2 "Export"]
-   [:pre "not implemented yet"]])
+   [:div.export-header
+    [:p "Filter Ideas"]
+    [:div "Comments Any"]
+    [:div "Ratings Any"]
+    [:div "Labels Any"]
+    [:div "Favorites Any"]]
+   [:div.export-body
+    [:pre "List with Ideas"]]])
 

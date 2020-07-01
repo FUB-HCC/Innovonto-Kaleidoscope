@@ -29,7 +29,6 @@
 
 (defn init-modal []
   (let [modal-open? @(rf/subscribe [::subs/modal-open?])]
-    (println (str "Modal-open?" modal-open?))
     [:div.modal {:style {:display (if modal-open? "block" "none")}}
      [:div.modal-content
       ;;[:span.close {:on-click close-modal} "×"]

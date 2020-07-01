@@ -25,31 +25,31 @@
      [:i.material-icons.marker-search-item "add"]
      [autocomplete/autocomplete_widget
       available-marker-labels
-      {:can-enter-new?   false
-       :display-size     10
-       :placeholder      "Search marker..."
-       :parent-div-style {:width "100%" :position "relative"}
+      {:can-enter-new?     false
+       :display-size       10
+       :placeholder        "Search marker..."
+       :parent-div-style   {:width "100%" :position "relative"}
        :click-submit-style {:position "absolute"
-                            :right "0"
-                            :top "0"
-                            :padding "0"}
-       :dropdown-style   {:position "absolute"
-                          :right "0"
-                          :left "0"
-                          :top "2em"
-                          :box-shadow "grey 1px 2px 1px 0px"
-                          :background "white"
-                          :overflow "hidden"
-                          :border "none" :z-index "999"}
-       :submit-fn        #(rf/dispatch [::events/add-marker-by-label %1])}]]))
+                            :right    "0"
+                            :top      "0"
+                            :padding  "0"}
+       :dropdown-style     {:position   "absolute"
+                            :right      "0"
+                            :left       "0"
+                            :top        "2em"
+                            :box-shadow "grey 1px 2px 1px 0px"
+                            :background "white"
+                            :overflow   "hidden"
+                            :border     "none" :z-index "999"}
+       :submit-fn          #(rf/dispatch [::events/add-marker-by-label %1])}]]))
 
 (defn select-color-icon [marker-id [_ val]]
-  [:i.material-icons {:key val
+  [:i.material-icons {:key      val
                       :on-click #(rf/dispatch [::events/update-color marker-id val])
                       :style    {:color val}} "fiber_manual_record"])
 
 (defn select-shape-icon [marker-id shape]
-  [:i.material-icons {:key shape
+  [:i.material-icons {:key      shape
                       :on-click #(rf/dispatch [::events/update-icon marker-id shape])
                       :style    {:color (:gray db/available-icon-colors)}} shape])
 
@@ -69,7 +69,7 @@
       :position :below-center
       :anchor [:div
                {:on-click #(swap! show-icon-selector? not)}
-               [:i.material-icons.active-marker-colorpicker {:style {:color color}} icon]]
+               [:i.material-icons.toolbox-row-button {:style {:color color}} icon]]
       :popover [popover/popover-content-wrapper
                 :body [marker-selection-menu id]]]
      [:span.active-marker-label label]
@@ -107,20 +107,35 @@
     [snapshot-element {:timestamp "last week" :user "Aphrodite"}]]])
 
 (defn available-marker [{:keys [:id :label]}]
-  [:div.toolbox-row-element.available-marker {:key id}
-   [:i.material-icons {:on-click #(rf/dispatch [::events/add-marker id])} "add"]
-   [:span label]])
+  [:div.toolbox-row-element.available-marker {:key      id
+                                              :on-click #(rf/dispatch [::events/add-marker id])}
+   [:div
+    [:i.material-icons.toolbox-row-button "add"]]
+   [:span.active-marker-label label]])
 
 (defn available-marker-pane []
-  (let [available-marker-list @(rf/subscribe [::subs/ordered-available-marker])]
+  (let [paging-config @(rf/subscribe [::subs/available-marker-paging-config])
+        current-page @(rf/subscribe [::subs/current-available-marker-page])]
     [:div
      [:h3 "Marker"]
-     (doall (map available-marker available-marker-list))]))
+     (doall (map available-marker current-page))
+     [:div.available-marker-paging
+      [:div {:class (if (= (:current-page paging-config) 0) "disabled")}
+       [:i.material-icons
+        {:on-click #(rf/dispatch [::events/available-marker-page-down])}
+        "navigate_before"]]
+      [:div
+       [:span (:current-page paging-config)]]
+      [:div {:class (if (= (:current-page paging-config) (:max-page paging-config)) "disabled")}
+       [:i.material-icons
+        {:on-click #(rf/dispatch [::events/available-marker-page-up])}
+        "navigate_next"]]]]))
 
 (defn marker-toolbox []
   [:div.toolbox
    [:div.toolbox-header
-    [:h2 "Marker"]]
+    [:div.marker-toolbox-header
+     [:h2 "Marker"]]]
    [:div.toolbox-body
     [selected-marker-pane]
     [snapshot-pane]

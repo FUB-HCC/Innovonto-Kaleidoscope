@@ -3,6 +3,11 @@
             [hcc.innovonto.kaleidoscope.subs :as subs]
             [hcc.innovonto.kaleidoscope.events :as events]
             [hcc.innovonto.kaleidoscope.db :as db]))
+(defn similar-ideas-panel [idea]
+  [:h4 "Similar Ideas"]
+  ;;TODO similar ideas component
+  [:div
+   [:i.material-icons "north_east"]])
 
 (defn visibility-indicator [idea]
   [:i.material-icons {:on-click #(rf/dispatch [::events/toggle-visibility idea])} (if (:visible idea) "visibility" "visibility_off")])
@@ -46,7 +51,8 @@
     [:div.toolbox
      [:div.toolbox-header
       [:div.idea-details-header
-       [:span.idea-id "i"]
+       ;;TODO copy uuid to clipboard on click
+       [:i.material-icons "info"]
        [visibility-indicator active-idea]
        [rating-indicator active-idea]
        [label-indicator active-idea]
@@ -54,13 +60,11 @@
        [:i.material-icons {:on-click #(rf/dispatch [::events/close-idea-toolbox])} "close"]]
       ]
      [:div.idea-toolbox-body
+      ;;TODO fallback logic: if no title -> uuid
       [:h2.idea-title (:id active-idea)]
-      [:span "Created By " (get active-idea :creator "Unknown User")]
-      [:div
+      [:p.idea-subtitle "created by " (get active-idea :creator "Unknown User")]
+      [:div.idea-content
        [:p (:content active-idea)]]
-      [:h4 "Similar Ideas"]
-      [:div
-       [:i.material-icons "north_east"]]
-      ]
+      [similar-ideas-panel active-idea]]
      [:div.idea-toolbox-annotations]
      ]))

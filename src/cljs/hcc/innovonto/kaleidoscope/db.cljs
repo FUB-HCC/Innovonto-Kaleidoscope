@@ -12,6 +12,10 @@
                  :active-toolbox {
                                   :title "marker-toolbox"
                                   }
+                 :available-marker-toolbox {
+                                            :page-size 10
+                                            :current-page 0
+                                            }
                  :marker         {
                                   "http://dbpedia.org/resource/Material"   {:id    "http://dbpedia.org/resource/Material"
                                                                             :label "Material"

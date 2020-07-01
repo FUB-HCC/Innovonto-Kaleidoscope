@@ -148,3 +148,17 @@
     (if (contains? (get-in db [:all-ideas (:id idea) :label]) color)
       (update-in db [:all-ideas (:id idea) :label] #(disj %1 color))
       (update-in db [:all-ideas (:id idea) :label] #(conj-with-default %1 color)))))
+
+
+(rf/reg-event-db
+  ::available-marker-page-down
+  (fn [db [_]]
+    (if (= (:current-page (:available-marker-toolbox db)) 0)
+      db
+      (update-in db [:available-marker-toolbox :current-page] dec))))
+
+;;TODO check boundaries
+(rf/reg-event-db
+  ::available-marker-page-up
+  (fn [db [_]]
+    (update-in db [:available-marker-toolbox :current-page] inc)))

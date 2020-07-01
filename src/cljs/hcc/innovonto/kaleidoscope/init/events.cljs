@@ -81,13 +81,11 @@
 (defn convert-to-db-structure [server-response]
   (let [response-ideas (:bindings (:results server-response))
         mappings (into [] (map convert-one response-ideas))]
-    (println mappings)
     (into (sorted-map) mappings)))
 
 (rf/reg-event-db
   ::initialize-cell-map
   (fn [db [_ response]]
-    (println (:active-tab db))
     (-> db
         (assoc :sync-state :up-to-date)
         (assoc :all-ideas (convert-to-db-structure response)))))

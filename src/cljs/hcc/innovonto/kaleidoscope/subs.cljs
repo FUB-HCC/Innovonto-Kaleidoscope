@@ -20,12 +20,27 @@
   (fn [db _]
     (:marker-list db)))
 
+;;TODO calculate max-page
+(rf/reg-sub
+  ::available-marker-paging-config
+  (fn [db _]
+    (assoc (:available-marker-toolbox db) :max-page 10)))
+
+(rf/reg-sub
+  ::current-available-marker-page
+  :<- [::available-marker-paging-config]
+  :<- [::ordered-available-marker]
+  (fn [[paging-config available-marker] _]
+    (let [partitioned-marker (partition (:page-size paging-config) (:page-size paging-config) nil available-marker)]
+      ;;TODO check bounds
+      (nth partitioned-marker (:current-page paging-config)))))
+
 (rf/reg-sub
   ::ordered-available-marker
   :<- [::available-marker]
   :<- [::marker-list]
-  (fn [[all-marker marker-list] _]
-    (filterv some? (map (fn [id] (get all-marker id)) marker-list))))
+  (fn [[available-marker marker-list] _]
+    (filterv some? (map (fn [id] (get available-marker id)) marker-list))))
 
 (rf/reg-sub
   ::available-marker
