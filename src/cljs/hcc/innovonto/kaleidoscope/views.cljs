@@ -26,7 +26,7 @@
      [autocomplete/autocomplete_widget
       available-marker-labels
       {:can-enter-new?   false
-       :display-size     1
+       :display-size     10
        :placeholder      "Search marker..."
        :parent-div-style {:width "100%" :position "relative"}
        :click-submit-style {:position "absolute"
@@ -69,14 +69,14 @@
       :position :below-center
       :anchor [:div
                {:on-click #(swap! show-icon-selector? not)}
-               [:i.material-icons {:style {:color color}} icon]]
+               [:i.material-icons.active-marker-colorpicker {:style {:color color}} icon]]
       :popover [popover/popover-content-wrapper
                 :body [marker-selection-menu id]]]
-     [:div label]
+     [:span.active-marker-label label]
      [:div.active-marker-toolbar
-      [:div [:i.material-icons "visibility"]]
-      [:div [:i.material-icons "settings"]]
-      [:div [:i.material-icons {:on-click #(rf/dispatch [::events/remove-marker id])} "delete"]]]
+      [:div.toolbar-item.disabled [:i.material-icons "visibility"]]
+      [:div.toolbar-item.disabled [:i.material-icons "settings"]]
+      [:div.toolbar-item [:i.material-icons {:on-click #(rf/dispatch [::events/remove-marker id])} "delete"]]]
      ]))
 
 (defn selected-marker-pane []

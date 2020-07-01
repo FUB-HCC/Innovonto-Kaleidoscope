@@ -39,7 +39,7 @@ h2 {
 
 /*export const ITALIC_FONT_SMALL = 'italic 400 12px IBM Plex Sans'; /*/
 h3 {
-    color: #808080;
+    color: rgb(136, 136, 136);
     font-style: italic;
     font-size: 16px;
     font-weight: 400;
@@ -162,7 +162,7 @@ shadowBlur : 0,
 
 .toolbox {
     width: 100%;
-    background-color: #DCDCDC;
+    background-color: rgb(241, 240, 240);
 }
 
 .toolbox-header {
@@ -196,15 +196,41 @@ shadowBlur : 0,
 /* Active Markers */
 .active-marker {
     display: flex;
-    background-color: #C0C0C0;
+    align-items: center;
+    background-color: rgb(230, 230, 230);
+}
+
+.active-marker-label {
+    margin-left: 0.2rem;
+    flex-grow: 4;
+}
+
+.active-marker-colorpicker {
+    cursor: pointer;
+    background: rgb(216, 216, 216);
+    padding: 0.3rem;
+    color: rgb(156, 156, 156);
 }
 
 .active-marker-toolbar {
     display: flex;
+    align-self: flex-end;
 }
 
-.active-marker i {
+.toolbar-item {
+    margin-right: 0.8rem;
+    color: rgb(136, 136, 136);
     cursor: pointer;
+}
+
+.toolbar-item.disabled {
+    color: rgb(216, 216, 216);
+    cursor: default;
+}
+
+.toolbar-item.disabled:hover,
+.toolbar-item.disabled:focus {
+    cursor: default;
 }
 
 .marker-selection-menu {
@@ -226,9 +252,9 @@ shadowBlur : 0,
 }
 
 .marker-search-item {
-    background: #C0C0C0;
-    padding: 0.2rem;
-    color: #808080;
+    background: white;
+    padding: 0.3rem;
+    color: rgb(156, 156, 156);
     cursor: default;
 }
 
@@ -250,7 +276,7 @@ shadowBlur : 0,
 .snapshot-element {
     display: flex;
     justify-content: space-between;
-    background-color: #C0C0C0;
+    background-color: rgb(230, 230, 230);
 }
 
 .snapshot-element-toolbar {
@@ -263,7 +289,7 @@ shadowBlur : 0,
 
 /* Available Markers */
 .available-marker {
-    background-color: #C0C0C0;
+    background-color: rgb(230, 230, 230);
     cursor: pointer;
 }
 
